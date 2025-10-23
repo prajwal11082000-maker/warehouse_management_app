@@ -1,0 +1,4 @@
+id,device_id,device_name,forward_speed,turning_speed,status,battery_level,current_location,distance,created_at,updated_at
+1,rob1,rob1,300.0,300.0,working,100,2,0.00,2025-10-15T03:57:37.085771,2025-10-16T22:40:29.227079
+2,rr1,rr1,300.0,300.0,working,100,1,0.00,2025-10-15T22:41:02.001810,2025-10-16T22:41:45.074183
+3,zw1,zw1,300.0,300.0,working,100,1,0.00,2025-10-16T00:24:46.776905,2025-10-16T22:41:58.071554

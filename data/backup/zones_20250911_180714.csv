@@ -1,0 +1,7 @@
+id,map_id,from_zone,to_zone,magnitude,direction,zone_type,created_at
+1,1,b,c,3.0,north,storage,
+2,1,a,b,3.0,north,storage,
+3,2,1,2,5.0,north,storage,
+4,2,2,3,5.0,north,storage,
+5,4,1,2,5.0,north,storage,2025-09-11T18:06:15.924980
+6,4,2,3,50.0,north,storage,2025-09-11T18:06:23.042710

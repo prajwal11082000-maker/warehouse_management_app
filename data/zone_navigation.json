@@ -1,0 +1,196 @@
+{
+  "zone_connections": {
+    "1": [
+      {
+        "from_zone": "1",
+        "to_zone": "2",
+        "direction": "north",
+        "connection_id": "1",
+        "is_active": true
+      },
+      {
+        "from_zone": "1",
+        "to_zone": "2",
+        "direction": "north",
+        "connection_id": "5",
+        "is_active": true
+      },
+      {
+        "from_zone": "1",
+        "to_zone": "2",
+        "direction": "north",
+        "connection_id": "7",
+        "is_active": true
+      }
+    ],
+    "2": [
+      {
+        "from_zone": "2",
+        "to_zone": "3",
+        "direction": "east",
+        "connection_id": "2",
+        "is_active": true
+      },
+      {
+        "from_zone": "2",
+        "to_zone": "3",
+        "direction": "east",
+        "connection_id": "6",
+        "is_active": true
+      },
+      {
+        "from_zone": "2",
+        "to_zone": "3",
+        "direction": "east",
+        "connection_id": "9",
+        "is_active": true
+      },
+      {
+        "from_zone": "2",
+        "to_zone": "1",
+        "direction": "south",
+        "connection_id": "10",
+        "is_active": true
+      }
+    ],
+    "3": [
+      {
+        "from_zone": "3",
+        "to_zone": "2",
+        "direction": "west",
+        "connection_id": "3",
+        "is_active": true
+      },
+      {
+        "from_zone": "3",
+        "to_zone": "2",
+        "direction": "west",
+        "connection_id": "11",
+        "is_active": true
+      }
+    ]
+  },
+  "device_states": {
+    "d2": {
+      "current_zone": "3",
+      "locked_direction": "west",
+      "target_zone": "3",
+      "lock_timestamp": 1759479571.1302338,
+      "turn_type": "u_turn",
+      "device_id": "d2",
+      "is_transitioning": false,
+      "last_turn_signature": "T:U-Turn|Z:4|RD:0.0|LD:0.0|RM:180.0|LM:180.0",
+      "last_turn_timestamp": 1759479571.1302354,
+      "last_turn_zone": null
+    },
+    "d3": {
+      "current_zone": "2",
+      "locked_direction": "south",
+      "target_zone": "2",
+      "lock_timestamp": 1759479243.0043998,
+      "turn_type": "right",
+      "device_id": "d3",
+      "is_transitioning": false,
+      "last_turn_signature": null,
+      "last_turn_timestamp": null,
+      "last_turn_zone": null
+    },
+    "d4": {
+      "current_zone": "3",
+      "locked_direction": "south",
+      "target_zone": "2",
+      "lock_timestamp": 1759488258.9045346,
+      "turn_type": "left",
+      "device_id": "d4",
+      "is_transitioning": true,
+      "last_turn_signature": "T:Turning Left|Z:3|RD:-550.0|LD:550.0|RM:45.0|LM:45.0",
+      "last_turn_timestamp": 1759488258.9045358,
+      "last_turn_zone": "3"
+    },
+    "dvc1": {
+      "current_zone": "2",
+      "locked_direction": "south",
+      "target_zone": "1",
+      "lock_timestamp": 1759922731.9487326,
+      "turn_type": "left",
+      "device_id": "dvc1",
+      "is_transitioning": true,
+      "last_turn_signature": "T:Turning Left|Z:2|RD:-550.0|LD:550.0|RM:45.0|LM:45.0",
+      "last_turn_timestamp": 1759922731.9487338,
+      "last_turn_zone": "2"
+    },
+    "rob1": {
+      "current_zone": "2",
+      "locked_direction": "east",
+      "target_zone": "3",
+      "lock_timestamp": 1761049660.2092295,
+      "turn_type": "right",
+      "device_id": "rob1",
+      "is_transitioning": false,
+      "last_turn_signature": "T:Turning Right|Z:2|RD:550.0|LD:-550.0|RM:45.0|LM:45.0",
+      "last_turn_timestamp": 1761049660.2092304,
+      "last_turn_zone": "2"
+    },
+    "rob2": {
+      "current_zone": "2",
+      "locked_direction": null,
+      "target_zone": null,
+      "lock_timestamp": null,
+      "turn_type": null,
+      "device_id": "rob2",
+      "is_transitioning": false,
+      "last_turn_signature": null,
+      "last_turn_timestamp": null,
+      "last_turn_zone": null
+    },
+    "D1": {
+      "current_zone": "1",
+      "locked_direction": null,
+      "target_zone": null,
+      "lock_timestamp": null,
+      "turn_type": null,
+      "device_id": "D1",
+      "is_transitioning": false,
+      "last_turn_signature": null,
+      "last_turn_timestamp": null,
+      "last_turn_zone": null
+    },
+    "rr1": {
+      "current_zone": "1",
+      "locked_direction": "north",
+      "target_zone": "2",
+      "lock_timestamp": 1761051549.2234244,
+      "turn_type": "u_turn",
+      "device_id": "rr1",
+      "is_transitioning": false,
+      "last_turn_signature": "T:U-Turn|Z:1|RD:1100.0|LD:-1100.0|RM:45.0|LM:45.0",
+      "last_turn_timestamp": 1761051549.2234254,
+      "last_turn_zone": "1"
+    },
+    "zw1": {
+      "current_zone": "3",
+      "locked_direction": "north",
+      "target_zone": null,
+      "lock_timestamp": 1761028416.7447622,
+      "turn_type": null,
+      "device_id": "zw1",
+      "is_transitioning": false,
+      "last_turn_signature": null,
+      "last_turn_timestamp": null,
+      "last_turn_zone": null
+    },
+    "r11": {
+      "current_zone": "1",
+      "locked_direction": "north",
+      "target_zone": null,
+      "lock_timestamp": 1760680339.2251997,
+      "turn_type": null,
+      "device_id": "r11",
+      "is_transitioning": false,
+      "last_turn_signature": null,
+      "last_turn_timestamp": null,
+      "last_turn_zone": null
+    }
+  },
+  "last_saved": 1761052787.681169
+}

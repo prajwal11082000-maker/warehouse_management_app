@@ -1,0 +1,8 @@
+id,map_id,name,stop_ids,created_at
+1,1,High Priority Picking Stations,"1,3,5,7",2025-01-15T09:00:00
+2,1,Main Assembly Line Stops,"8,9",2025-01-15T09:15:00
+3,1,Bulk Storage Access Points,"10,11,12",2025-01-15T09:30:00
+4,1,Shipping Dock Stations,"13,14",2025-01-15T09:45:00
+5,2,Cold Storage Primary,"15,16,17",2025-01-14T15:00:00
+6,3,Loading Dock Left Side,"18,19",2025-01-13T11:30:00
+7,3,Shipping Bay,"20",2025-01-13T11:45:00

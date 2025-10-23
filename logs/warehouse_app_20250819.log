@@ -1,0 +1,473 @@
+2025-08-19 22:09:57,244 - warehouse_app - INFO - main.py:30 - Starting Warehouse Management System v1.0.0
+2025-08-19 22:09:58,992 - main_window - INFO - main_window.py:121 - Dashboard widget loaded successfully
+2025-08-19 22:09:59,012 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-08-19 22:09:59,013 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-08-19 22:09:59,021 - main_window - INFO - main_window.py:131 - Device Management widget loaded successfully
+2025-08-19 22:09:59,170 - main_window - INFO - main_window.py:142 - Task Creation widget loaded successfully
+2025-08-19 22:09:59,213 - main_window - INFO - main_window.py:153 - Task Monitor widget loaded successfully
+2025-08-19 22:09:59,258 - user_management - INFO - user_management.py:628 - Refreshing user data...
+2025-08-19 22:09:59,260 - user_management - INFO - user_management.py:651 - Loaded 11 users from CSV
+2025-08-19 22:09:59,272 - main_window - INFO - main_window.py:163 - User Management widget loaded successfully
+2025-08-19 22:09:59,683 - map_management - INFO - map_management.py:53 - Map Management widget initialized
+2025-08-19 22:09:59,771 - main_window - INFO - main_window.py:174 - Map Management widget loaded successfully
+2025-08-19 22:10:01,819 - api_client - WARNING - client.py:80 - Request attempt 1 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000002801B6A57F0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 22:10:03,862 - api_client - WARNING - client.py:80 - Request attempt 2 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x00000280178925D0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 22:10:05,922 - api_client - WARNING - client.py:80 - Request attempt 3 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000028017892AD0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 22:10:05,923 - warehouse_app - INFO - main.py:46 - Main window created successfully
+2025-08-19 22:10:06,040 - warehouse_app - INFO - main.py:154 - Application started successfully
+2025-08-19 22:10:09,773 - main_window - INFO - main_window.py:282 - Refreshed data for Map Management
+2025-08-19 22:10:16,277 - main_window - INFO - main_window.py:282 - Refreshed data for Create Task
+2025-08-19 22:10:29,017 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-08-19 22:10:29,021 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-08-19 22:10:59,014 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-08-19 22:10:59,019 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-08-19 22:11:01,814 - api_client - WARNING - client.py:80 - Request attempt 1 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000028017803360>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 22:11:03,847 - api_client - WARNING - client.py:80 - Request attempt 2 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000028017803230>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 22:11:05,888 - api_client - WARNING - client.py:80 - Request attempt 3 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000002801B599370>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 22:11:29,027 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-08-19 22:11:29,033 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-08-19 22:11:59,020 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-08-19 22:11:59,025 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-08-19 22:12:01,811 - api_client - WARNING - client.py:80 - Request attempt 1 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000002801784B570>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 22:12:03,861 - api_client - WARNING - client.py:80 - Request attempt 2 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000002801784BCE0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 22:12:05,895 - api_client - WARNING - client.py:80 - Request attempt 3 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000002801784BF00>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 22:12:29,032 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-08-19 22:12:29,038 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-08-19 22:12:59,030 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-08-19 22:12:59,035 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-08-19 22:13:01,803 - api_client - WARNING - client.py:80 - Request attempt 1 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000002801B5B0160>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 22:13:03,847 - api_client - WARNING - client.py:80 - Request attempt 2 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000002801B5B0380>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 22:13:05,907 - api_client - WARNING - client.py:80 - Request attempt 3 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000002801B5B05A0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 22:13:05,914 - main_window - INFO - main_window.py:364 - Application closing
+2025-08-19 22:23:48,317 - warehouse_app - INFO - main.py:30 - Starting Warehouse Management System v1.0.0
+2025-08-19 22:23:50,445 - main_window - INFO - main_window.py:121 - Dashboard widget loaded successfully
+2025-08-19 22:23:50,489 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-08-19 22:23:50,493 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-08-19 22:23:50,503 - main_window - INFO - main_window.py:131 - Device Management widget loaded successfully
+2025-08-19 22:28:34,826 - warehouse_app - INFO - main.py:30 - Starting Warehouse Management System v1.0.0
+2025-08-19 22:28:35,503 - main_window - INFO - main_window.py:121 - Dashboard widget loaded successfully
+2025-08-19 22:28:35,529 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-08-19 22:28:35,531 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-08-19 22:28:35,544 - main_window - INFO - main_window.py:131 - Device Management widget loaded successfully
+2025-08-19 22:30:23,015 - warehouse_app - INFO - main.py:30 - Starting Warehouse Management System v1.0.0
+2025-08-19 22:30:23,917 - main_window - INFO - main_window.py:121 - Dashboard widget loaded successfully
+2025-08-19 22:30:23,945 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-08-19 22:30:23,947 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-08-19 22:30:23,959 - main_window - INFO - main_window.py:131 - Device Management widget loaded successfully
+2025-08-19 22:30:24,103 - main_window - INFO - main_window.py:142 - Task Creation widget loaded successfully
+2025-08-19 22:30:24,176 - main_window - INFO - main_window.py:153 - Task Monitor widget loaded successfully
+2025-08-19 22:30:24,247 - user_management - INFO - user_management.py:628 - Refreshing user data...
+2025-08-19 22:30:24,251 - user_management - INFO - user_management.py:651 - Loaded 11 users from CSV
+2025-08-19 22:30:24,267 - main_window - INFO - main_window.py:163 - User Management widget loaded successfully
+2025-08-19 22:30:24,987 - map_management - INFO - map_management.py:53 - Map Management widget initialized
+2025-08-19 22:30:25,166 - main_window - INFO - main_window.py:174 - Map Management widget loaded successfully
+2025-08-19 22:30:27,216 - api_client - WARNING - client.py:80 - Request attempt 1 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000022494C257F0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 22:30:29,242 - api_client - WARNING - client.py:80 - Request attempt 2 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000022491FAA5D0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 22:30:31,275 - api_client - WARNING - client.py:80 - Request attempt 3 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000022491FAAAD0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 22:30:31,277 - warehouse_app - INFO - main.py:46 - Main window created successfully
+2025-08-19 22:30:31,480 - warehouse_app - INFO - main.py:154 - Application started successfully
+2025-08-19 22:30:36,371 - main_window - INFO - main_window.py:282 - Refreshed data for Create Task
+2025-08-19 22:30:53,946 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-08-19 22:30:53,952 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-08-19 22:31:23,961 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-08-19 22:31:23,965 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-08-19 22:31:27,203 - api_client - WARNING - client.py:80 - Request attempt 1 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000022491ED3820>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 22:31:29,245 - api_client - WARNING - client.py:80 - Request attempt 2 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000022491ED3CE0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 22:31:31,263 - api_client - WARNING - client.py:80 - Request attempt 3 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000022494C29130>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 22:31:53,964 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-08-19 22:31:53,969 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-08-19 22:32:23,964 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-08-19 22:32:23,969 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-08-19 22:32:27,187 - api_client - WARNING - client.py:80 - Request attempt 1 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000022494C80050>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 22:32:29,224 - api_client - WARNING - client.py:80 - Request attempt 2 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000022494C80490>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 22:32:31,251 - api_client - WARNING - client.py:80 - Request attempt 3 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000022494C806B0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 22:32:53,986 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-08-19 22:32:53,990 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-08-19 22:33:23,998 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-08-19 22:33:24,004 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-08-19 22:33:27,203 - api_client - WARNING - client.py:80 - Request attempt 1 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000022494C808D0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 22:33:29,239 - api_client - WARNING - client.py:80 - Request attempt 2 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000022494C80AF0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 22:33:31,269 - api_client - WARNING - client.py:80 - Request attempt 3 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000022494C80D10>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 22:33:53,999 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-08-19 22:33:54,004 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-08-19 22:34:24,012 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-08-19 22:34:24,016 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-08-19 22:34:27,214 - api_client - WARNING - client.py:80 - Request attempt 1 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000022494C80F30>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 22:34:29,231 - api_client - WARNING - client.py:80 - Request attempt 2 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000022491F1BF00>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 22:34:31,259 - api_client - WARNING - client.py:80 - Request attempt 3 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000022491F1BCE0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 22:34:54,025 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-08-19 22:34:54,029 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-08-19 22:35:04,565 - main_window - INFO - main_window.py:364 - Application closing
+2025-08-19 22:44:40,983 - warehouse_app - INFO - main.py:30 - Starting Warehouse Management System v1.0.0
+2025-08-19 22:44:43,496 - main_window - INFO - main_window.py:121 - Dashboard widget loaded successfully
+2025-08-19 22:44:43,545 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-08-19 22:44:43,549 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-08-19 22:44:43,562 - main_window - INFO - main_window.py:131 - Device Management widget loaded successfully
+2025-08-19 22:44:43,642 - main_window - ERROR - main_window.py:144 - Task Creation failed: 'TaskCreationWidget' object has no attribute 'create_from_template'
+2025-08-19 22:44:43,678 - main_window - ERROR - main_window.py:218 - Even simple task widget failed: 'TaskCreationWidget' object has no attribute 'create_from_template'
+2025-08-19 22:44:43,744 - main_window - INFO - main_window.py:153 - Task Monitor widget loaded successfully
+2025-08-19 22:44:43,811 - user_management - INFO - user_management.py:628 - Refreshing user data...
+2025-08-19 22:44:43,815 - user_management - INFO - user_management.py:651 - Loaded 11 users from CSV
+2025-08-19 22:44:43,845 - main_window - INFO - main_window.py:163 - User Management widget loaded successfully
+2025-08-19 22:44:44,540 - map_management - INFO - map_management.py:53 - Map Management widget initialized
+2025-08-19 22:44:44,679 - main_window - INFO - main_window.py:174 - Map Management widget loaded successfully
+2025-08-19 22:44:46,718 - api_client - WARNING - client.py:80 - Request attempt 1 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001E2153A57F0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 22:44:48,741 - api_client - WARNING - client.py:80 - Request attempt 2 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001E2126EA210>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 22:44:50,757 - api_client - WARNING - client.py:80 - Request attempt 3 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001E2126EA710>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 22:44:50,758 - warehouse_app - INFO - main.py:46 - Main window created successfully
+2025-08-19 22:44:50,935 - warehouse_app - INFO - main.py:154 - Application started successfully
+2025-08-19 22:44:56,044 - main_window - INFO - main_window.py:364 - Application closing
+2025-08-19 22:53:22,241 - warehouse_app - INFO - main.py:30 - Starting Warehouse Management System v1.0.0
+2025-08-19 22:53:23,950 - main_window - INFO - main_window.py:121 - Dashboard widget loaded successfully
+2025-08-19 22:53:23,988 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-08-19 22:53:23,991 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-08-19 22:53:23,998 - main_window - INFO - main_window.py:131 - Device Management widget loaded successfully
+2025-08-19 22:53:24,014 - main_window - ERROR - main_window.py:144 - Task Creation failed: name 'current_item' is not defined
+2025-08-19 22:53:24,016 - warehouse_app - ERROR - main.py:48 - Error creating main window: name 'current_item' is not defined
+2025-08-19 22:53:24,367 - warehouse_app - INFO - main.py:154 - Application started successfully
+2025-08-19 23:01:11,999 - warehouse_app - INFO - main.py:30 - Starting Warehouse Management System v1.0.0
+2025-08-19 23:01:13,944 - main_window - INFO - main_window.py:121 - Dashboard widget loaded successfully
+2025-08-19 23:01:13,971 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-08-19 23:01:13,973 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-08-19 23:01:13,980 - main_window - INFO - main_window.py:131 - Device Management widget loaded successfully
+2025-08-19 23:01:13,994 - main_window - ERROR - main_window.py:144 - Task Creation failed: 'TaskCreationWidget' object has no attribute 'load_task_templates'
+2025-08-19 23:01:13,995 - main_window - ERROR - main_window.py:218 - Even simple task widget failed: 'TaskCreationWidget' object has no attribute 'load_task_templates'
+2025-08-19 23:01:14,050 - main_window - INFO - main_window.py:153 - Task Monitor widget loaded successfully
+2025-08-19 23:01:14,100 - user_management - INFO - user_management.py:628 - Refreshing user data...
+2025-08-19 23:01:14,102 - user_management - INFO - user_management.py:651 - Loaded 11 users from CSV
+2025-08-19 23:01:14,113 - main_window - INFO - main_window.py:163 - User Management widget loaded successfully
+2025-08-19 23:01:14,551 - map_management - INFO - map_management.py:53 - Map Management widget initialized
+2025-08-19 23:01:14,635 - main_window - INFO - main_window.py:174 - Map Management widget loaded successfully
+2025-08-19 23:01:16,673 - api_client - WARNING - client.py:80 - Request attempt 1 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001ACCE5F97F0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 23:01:18,729 - api_client - WARNING - client.py:80 - Request attempt 2 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001ACCB93A210>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 23:01:20,774 - api_client - WARNING - client.py:80 - Request attempt 3 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001ACCB93A710>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 23:01:20,774 - warehouse_app - INFO - main.py:46 - Main window created successfully
+2025-08-19 23:01:20,895 - warehouse_app - INFO - main.py:154 - Application started successfully
+2025-08-19 23:01:43,978 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-08-19 23:01:43,985 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-08-19 23:02:13,982 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-08-19 23:02:13,989 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-08-19 23:02:16,685 - api_client - WARNING - client.py:80 - Request attempt 1 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001ACCB863820>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 23:02:18,717 - api_client - WARNING - client.py:80 - Request attempt 2 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001ACCB863CE0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 23:02:20,756 - api_client - WARNING - client.py:80 - Request attempt 3 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001ACCE5E8DD0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 23:02:44,001 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-08-19 23:02:44,008 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-08-19 23:03:14,009 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-08-19 23:03:14,017 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-08-19 23:03:16,703 - api_client - WARNING - client.py:80 - Request attempt 1 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001ACCB8ABF00>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 23:03:18,735 - api_client - WARNING - client.py:80 - Request attempt 2 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001ACCB920380>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 23:03:20,780 - api_client - WARNING - client.py:80 - Request attempt 3 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001ACCB9205A0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 23:03:43,102 - main_window - INFO - main_window.py:364 - Application closing
+2025-08-19 23:03:46,794 - warehouse_app - INFO - main.py:30 - Starting Warehouse Management System v1.0.0
+2025-08-19 23:03:47,855 - main_window - INFO - main_window.py:121 - Dashboard widget loaded successfully
+2025-08-19 23:03:47,881 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-08-19 23:03:47,883 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-08-19 23:03:47,889 - main_window - INFO - main_window.py:131 - Device Management widget loaded successfully
+2025-08-19 23:03:47,998 - main_window - INFO - main_window.py:142 - Task Creation widget loaded successfully
+2025-08-19 23:03:48,052 - main_window - INFO - main_window.py:153 - Task Monitor widget loaded successfully
+2025-08-19 23:03:48,105 - user_management - INFO - user_management.py:628 - Refreshing user data...
+2025-08-19 23:03:48,111 - user_management - INFO - user_management.py:651 - Loaded 11 users from CSV
+2025-08-19 23:03:48,125 - main_window - INFO - main_window.py:163 - User Management widget loaded successfully
+2025-08-19 23:03:48,536 - map_management - INFO - map_management.py:53 - Map Management widget initialized
+2025-08-19 23:03:48,635 - main_window - INFO - main_window.py:174 - Map Management widget loaded successfully
+2025-08-19 23:03:50,679 - api_client - WARNING - client.py:80 - Request attempt 1 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001901BBBD940>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 23:03:52,727 - api_client - WARNING - client.py:80 - Request attempt 2 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000019018EFA490>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 23:03:54,762 - api_client - WARNING - client.py:80 - Request attempt 3 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000019018EFA990>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 23:03:54,763 - warehouse_app - INFO - main.py:46 - Main window created successfully
+2025-08-19 23:03:54,918 - warehouse_app - INFO - main.py:154 - Application started successfully
+2025-08-19 23:04:17,890 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-08-19 23:04:17,894 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-08-19 23:04:47,896 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-08-19 23:04:47,902 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-08-19 23:04:50,703 - api_client - WARNING - client.py:80 - Request attempt 1 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000019018E23950>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 23:04:52,747 - api_client - WARNING - client.py:80 - Request attempt 2 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000019018E23E10>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 23:04:54,784 - api_client - WARNING - client.py:80 - Request attempt 3 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001901BBA0DD0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 23:05:17,897 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-08-19 23:05:17,904 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-08-19 23:05:47,894 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-08-19 23:05:47,901 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-08-19 23:05:50,694 - api_client - WARNING - client.py:80 - Request attempt 1 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000019018E6BF00>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 23:05:52,728 - api_client - WARNING - client.py:80 - Request attempt 2 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001901BC04380>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 23:05:54,764 - api_client - WARNING - client.py:80 - Request attempt 3 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001901BC045A0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 23:06:17,893 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-08-19 23:06:17,898 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-08-19 23:06:47,886 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-08-19 23:06:47,892 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-08-19 23:06:50,731 - api_client - WARNING - client.py:80 - Request attempt 1 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001901BC047C0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 23:06:52,763 - api_client - WARNING - client.py:80 - Request attempt 2 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001901BC049E0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 23:06:54,824 - api_client - WARNING - client.py:80 - Request attempt 3 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001901BC04C00>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 23:07:17,891 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-08-19 23:07:17,897 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-08-19 23:07:47,902 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-08-19 23:07:47,914 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-08-19 23:07:50,793 - api_client - WARNING - client.py:80 - Request attempt 1 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001901BC04E20>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 23:07:52,854 - api_client - WARNING - client.py:80 - Request attempt 2 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000019018E6BDF0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 23:07:54,875 - api_client - WARNING - client.py:80 - Request attempt 3 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000019018E6BF00>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 23:08:17,917 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-08-19 23:08:17,921 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-08-19 23:08:47,948 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-08-19 23:08:47,953 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-08-19 23:08:50,724 - api_client - WARNING - client.py:80 - Request attempt 1 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000019018E6BAC0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 23:08:52,767 - api_client - WARNING - client.py:80 - Request attempt 2 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000019018E6B790>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 23:08:54,824 - api_client - WARNING - client.py:80 - Request attempt 3 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000019018E6B570>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 23:09:17,936 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-08-19 23:09:17,941 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-08-19 23:09:21,704 - main_window - INFO - main_window.py:364 - Application closing
+2025-08-19 23:09:25,234 - warehouse_app - INFO - main.py:30 - Starting Warehouse Management System v1.0.0
+2025-08-19 23:09:27,075 - main_window - INFO - main_window.py:121 - Dashboard widget loaded successfully
+2025-08-19 23:09:27,103 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-08-19 23:09:27,106 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-08-19 23:09:27,112 - main_window - INFO - main_window.py:131 - Device Management widget loaded successfully
+2025-08-19 23:09:27,219 - main_window - ERROR - main_window.py:144 - Task Creation failed: 'TaskCreationWidget' object has no attribute 'preview_task'
+2025-08-19 23:09:27,256 - main_window - ERROR - main_window.py:218 - Even simple task widget failed: 'TaskCreationWidget' object has no attribute 'preview_task'
+2025-08-19 23:09:27,315 - main_window - INFO - main_window.py:153 - Task Monitor widget loaded successfully
+2025-08-19 23:09:27,367 - user_management - INFO - user_management.py:628 - Refreshing user data...
+2025-08-19 23:09:27,368 - user_management - INFO - user_management.py:651 - Loaded 11 users from CSV
+2025-08-19 23:09:27,378 - main_window - INFO - main_window.py:163 - User Management widget loaded successfully
+2025-08-19 23:09:27,858 - map_management - INFO - map_management.py:53 - Map Management widget initialized
+2025-08-19 23:09:27,954 - main_window - INFO - main_window.py:174 - Map Management widget loaded successfully
+2025-08-19 23:09:30,006 - api_client - WARNING - client.py:80 - Request attempt 1 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001D4C75597F0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 23:09:32,054 - api_client - WARNING - client.py:80 - Request attempt 2 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001D4C489A350>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 23:09:34,099 - api_client - WARNING - client.py:80 - Request attempt 3 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001D4C489A850>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 23:09:34,100 - warehouse_app - INFO - main.py:46 - Main window created successfully
+2025-08-19 23:09:34,227 - warehouse_app - INFO - main.py:154 - Application started successfully
+2025-08-19 23:09:38,103 - main_window - INFO - main_window.py:364 - Application closing
+2025-08-19 23:11:16,439 - warehouse_app - INFO - main.py:30 - Starting Warehouse Management System v1.0.0
+2025-08-19 23:11:18,112 - main_window - INFO - main_window.py:121 - Dashboard widget loaded successfully
+2025-08-19 23:11:18,137 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-08-19 23:11:18,141 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-08-19 23:11:18,148 - main_window - INFO - main_window.py:131 - Device Management widget loaded successfully
+2025-08-19 23:11:18,266 - main_window - INFO - main_window.py:142 - Task Creation widget loaded successfully
+2025-08-19 23:11:18,323 - main_window - INFO - main_window.py:153 - Task Monitor widget loaded successfully
+2025-08-19 23:11:18,378 - user_management - INFO - user_management.py:628 - Refreshing user data...
+2025-08-19 23:11:18,380 - user_management - INFO - user_management.py:651 - Loaded 11 users from CSV
+2025-08-19 23:11:18,390 - main_window - INFO - main_window.py:163 - User Management widget loaded successfully
+2025-08-19 23:11:18,871 - map_management - INFO - map_management.py:53 - Map Management widget initialized
+2025-08-19 23:11:18,974 - main_window - INFO - main_window.py:174 - Map Management widget loaded successfully
+2025-08-19 23:11:21,033 - api_client - WARNING - client.py:80 - Request attempt 1 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001815BD497F0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 23:11:23,076 - api_client - WARNING - client.py:80 - Request attempt 2 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001815908A5D0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 23:11:25,127 - api_client - WARNING - client.py:80 - Request attempt 3 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001815908AAD0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 23:11:25,127 - warehouse_app - INFO - main.py:46 - Main window created successfully
+2025-08-19 23:11:25,257 - warehouse_app - INFO - main.py:154 - Application started successfully
+2025-08-19 23:11:27,682 - main_window - INFO - main_window.py:282 - Refreshed data for Create Task
+2025-08-19 23:11:48,152 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-08-19 23:11:48,158 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-08-19 23:12:18,162 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-08-19 23:12:18,168 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-08-19 23:12:21,031 - api_client - WARNING - client.py:80 - Request attempt 1 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000018158FB3950>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 23:12:23,079 - api_client - WARNING - client.py:80 - Request attempt 2 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000018158FB3E10>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 23:12:25,128 - api_client - WARNING - client.py:80 - Request attempt 3 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001815BD30DD0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 23:12:48,162 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-08-19 23:12:48,167 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-08-19 23:13:18,164 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-08-19 23:13:18,168 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-08-19 23:13:21,023 - api_client - WARNING - client.py:80 - Request attempt 1 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000018158FFBF00>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 23:13:23,040 - api_client - WARNING - client.py:80 - Request attempt 2 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001815BD94380>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 23:13:25,070 - api_client - WARNING - client.py:80 - Request attempt 3 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001815BD945A0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 23:13:48,170 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-08-19 23:13:48,177 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-08-19 23:14:18,167 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-08-19 23:14:18,171 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-08-19 23:14:21,017 - api_client - WARNING - client.py:80 - Request attempt 1 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001815BD947C0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 23:14:23,044 - api_client - WARNING - client.py:80 - Request attempt 2 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001815BD949E0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 23:14:25,087 - api_client - WARNING - client.py:80 - Request attempt 3 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001815BD94C00>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 23:14:48,167 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-08-19 23:14:48,173 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-08-19 23:15:18,174 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-08-19 23:15:18,180 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-08-19 23:15:21,062 - api_client - WARNING - client.py:80 - Request attempt 1 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001815BD94E20>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 23:15:23,098 - api_client - WARNING - client.py:80 - Request attempt 2 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000018158FFBDF0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 23:15:25,137 - api_client - WARNING - client.py:80 - Request attempt 3 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000018158FFBF00>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 23:15:48,184 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-08-19 23:15:48,192 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-08-19 23:16:18,201 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-08-19 23:16:18,207 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-08-19 23:16:21,052 - api_client - WARNING - client.py:80 - Request attempt 1 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000018158FFBAC0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 23:16:23,109 - api_client - WARNING - client.py:80 - Request attempt 2 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000018158FFB790>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 23:16:25,150 - api_client - WARNING - client.py:80 - Request attempt 3 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000018158FFB570>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 23:16:48,222 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-08-19 23:16:48,227 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-08-19 23:17:18,241 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-08-19 23:17:18,247 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-08-19 23:17:21,062 - api_client - WARNING - client.py:80 - Request attempt 1 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000018158FFB240>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 23:17:23,108 - api_client - WARNING - client.py:80 - Request attempt 2 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000018158FFB460>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 23:17:25,141 - api_client - WARNING - client.py:80 - Request attempt 3 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001815BD94C00>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 23:17:48,247 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-08-19 23:17:48,252 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-08-19 23:18:18,250 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-08-19 23:18:18,257 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-08-19 23:18:21,085 - api_client - WARNING - client.py:80 - Request attempt 1 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001815BD949E0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 23:18:23,127 - api_client - WARNING - client.py:80 - Request attempt 2 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001815BD947C0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 23:18:25,189 - api_client - WARNING - client.py:80 - Request attempt 3 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001815BD945A0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 23:18:48,258 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-08-19 23:18:48,263 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-08-19 23:19:18,265 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-08-19 23:19:18,271 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-08-19 23:19:21,076 - api_client - WARNING - client.py:80 - Request attempt 1 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001815BD94270>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 23:19:23,119 - api_client - WARNING - client.py:80 - Request attempt 2 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001815BD94380>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 23:19:25,154 - api_client - WARNING - client.py:80 - Request attempt 3 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001815BD94050>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 23:19:48,274 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-08-19 23:19:48,281 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-08-19 23:20:18,273 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-08-19 23:20:18,278 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-08-19 23:20:21,093 - api_client - WARNING - client.py:80 - Request attempt 1 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001815BD95150>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 23:20:23,141 - api_client - WARNING - client.py:80 - Request attempt 2 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001815BD95370>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 23:20:25,180 - api_client - WARNING - client.py:80 - Request attempt 3 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001815BD95590>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 23:20:48,262 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-08-19 23:20:48,269 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-08-19 23:21:18,272 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-08-19 23:21:18,279 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-08-19 23:21:21,102 - api_client - WARNING - client.py:80 - Request attempt 1 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001815BD957B0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 23:21:23,121 - api_client - WARNING - client.py:80 - Request attempt 2 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001815BD959D0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 23:21:25,149 - api_client - WARNING - client.py:80 - Request attempt 3 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001815BD95BF0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 23:21:48,261 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-08-19 23:21:48,267 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-08-19 23:22:18,264 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-08-19 23:22:18,268 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-08-19 23:22:21,092 - api_client - WARNING - client.py:80 - Request attempt 1 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001815BD95E10>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 23:22:23,121 - api_client - WARNING - client.py:80 - Request attempt 2 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001815BD96030>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 23:22:25,152 - api_client - WARNING - client.py:80 - Request attempt 3 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001815BD96250>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 23:22:48,276 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-08-19 23:22:48,279 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-08-19 23:23:18,287 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-08-19 23:23:18,291 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-08-19 23:23:21,104 - api_client - WARNING - client.py:80 - Request attempt 1 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001815BD96470>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 23:23:23,136 - api_client - WARNING - client.py:80 - Request attempt 2 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001815BD96690>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 23:23:25,191 - api_client - WARNING - client.py:80 - Request attempt 3 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001815BD968B0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 23:23:48,312 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-08-19 23:23:48,319 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-08-19 23:24:09,956 - main_window - INFO - main_window.py:364 - Application closing
+2025-08-19 23:24:17,183 - warehouse_app - INFO - main.py:30 - Starting Warehouse Management System v1.0.0
+2025-08-19 23:24:18,557 - main_window - INFO - main_window.py:121 - Dashboard widget loaded successfully
+2025-08-19 23:24:18,575 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-08-19 23:24:18,576 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-08-19 23:24:18,584 - main_window - INFO - main_window.py:131 - Device Management widget loaded successfully
+2025-08-19 23:24:18,673 - main_window - INFO - main_window.py:142 - Task Creation widget loaded successfully
+2025-08-19 23:24:18,715 - main_window - INFO - main_window.py:153 - Task Monitor widget loaded successfully
+2025-08-19 23:24:18,762 - user_management - INFO - user_management.py:628 - Refreshing user data...
+2025-08-19 23:24:18,764 - user_management - INFO - user_management.py:651 - Loaded 11 users from CSV
+2025-08-19 23:24:18,773 - main_window - INFO - main_window.py:163 - User Management widget loaded successfully
+2025-08-19 23:24:19,148 - map_management - INFO - map_management.py:53 - Map Management widget initialized
+2025-08-19 23:24:19,249 - main_window - INFO - main_window.py:174 - Map Management widget loaded successfully
+2025-08-19 23:24:21,294 - api_client - WARNING - client.py:80 - Request attempt 1 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001C6D2F957F0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 23:24:23,338 - api_client - WARNING - client.py:80 - Request attempt 2 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001C6D02DA5D0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 23:24:25,385 - api_client - WARNING - client.py:80 - Request attempt 3 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001C6D02DAAD0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 23:24:25,385 - warehouse_app - INFO - main.py:46 - Main window created successfully
+2025-08-19 23:24:25,474 - warehouse_app - INFO - main.py:154 - Application started successfully
+2025-08-19 23:24:42,448 - main_window - INFO - main_window.py:282 - Refreshed data for Create Task
+2025-08-19 23:24:48,600 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-08-19 23:24:48,602 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-08-19 23:50:45,941 - warehouse_app - INFO - main.py:30 - Starting Warehouse Management System v1.0.0
+2025-08-19 23:50:48,401 - main_window - INFO - main_window.py:121 - Dashboard widget loaded successfully
+2025-08-19 23:50:48,436 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-08-19 23:50:48,438 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-08-19 23:50:48,448 - main_window - INFO - main_window.py:131 - Device Management widget loaded successfully
+2025-08-19 23:50:48,577 - main_window - INFO - main_window.py:142 - Task Creation widget loaded successfully
+2025-08-19 23:50:48,633 - main_window - INFO - main_window.py:153 - Task Monitor widget loaded successfully
+2025-08-19 23:50:48,687 - user_management - INFO - user_management.py:628 - Refreshing user data...
+2025-08-19 23:50:48,689 - user_management - INFO - user_management.py:651 - Loaded 11 users from CSV
+2025-08-19 23:50:48,702 - main_window - INFO - main_window.py:163 - User Management widget loaded successfully
+2025-08-19 23:50:49,217 - map_management - INFO - map_management.py:53 - Map Management widget initialized
+2025-08-19 23:50:49,320 - main_window - INFO - main_window.py:174 - Map Management widget loaded successfully
+2025-08-19 23:50:51,372 - api_client - WARNING - client.py:80 - Request attempt 1 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000002E5403597F0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 23:50:53,414 - api_client - WARNING - client.py:80 - Request attempt 2 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000002E53D69E5D0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 23:50:55,473 - api_client - WARNING - client.py:80 - Request attempt 3 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000002E53D69EAD0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 23:50:55,474 - warehouse_app - INFO - main.py:46 - Main window created successfully
+2025-08-19 23:50:55,593 - warehouse_app - INFO - main.py:154 - Application started successfully
+2025-08-19 23:50:59,869 - main_window - INFO - main_window.py:282 - Refreshed data for Create Task
+2025-08-19 23:53:49,916 - warehouse_app - INFO - main.py:30 - Starting Warehouse Management System v1.0.0
+2025-08-19 23:53:52,187 - main_window - INFO - main_window.py:121 - Dashboard widget loaded successfully
+2025-08-19 23:53:52,241 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-08-19 23:53:52,245 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-08-19 23:53:52,262 - main_window - INFO - main_window.py:131 - Device Management widget loaded successfully
+2025-08-19 23:53:52,532 - main_window - INFO - main_window.py:142 - Task Creation widget loaded successfully
+2025-08-19 23:53:52,585 - main_window - INFO - main_window.py:153 - Task Monitor widget loaded successfully
+2025-08-19 23:53:52,644 - user_management - INFO - user_management.py:628 - Refreshing user data...
+2025-08-19 23:53:52,646 - user_management - INFO - user_management.py:651 - Loaded 11 users from CSV
+2025-08-19 23:53:52,664 - main_window - INFO - main_window.py:163 - User Management widget loaded successfully
+2025-08-19 23:53:53,173 - map_management - INFO - map_management.py:53 - Map Management widget initialized
+2025-08-19 23:53:53,281 - main_window - INFO - main_window.py:174 - Map Management widget loaded successfully
+2025-08-19 23:53:55,333 - api_client - WARNING - client.py:80 - Request attempt 1 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000025BE96D57F0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 23:53:57,363 - api_client - WARNING - client.py:80 - Request attempt 2 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000025BE6A1E710>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 23:53:59,401 - api_client - WARNING - client.py:80 - Request attempt 3 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000025BE6A1EC10>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 23:53:59,402 - warehouse_app - INFO - main.py:46 - Main window created successfully
+2025-08-19 23:53:59,514 - warehouse_app - INFO - main.py:154 - Application started successfully
+2025-08-19 23:54:01,383 - main_window - INFO - main_window.py:282 - Refreshed data for Create Task
+2025-08-19 23:54:22,236 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-08-19 23:54:22,240 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-08-19 23:54:52,244 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-08-19 23:54:52,248 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-08-19 23:54:55,324 - api_client - WARNING - client.py:80 - Request attempt 1 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000025BE6943BB0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 23:54:57,354 - api_client - WARNING - client.py:80 - Request attempt 2 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000025BE69E8180>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 23:54:59,398 - api_client - WARNING - client.py:80 - Request attempt 3 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000025BE96BCDD0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 23:55:22,239 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-08-19 23:55:22,243 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-08-19 23:55:52,246 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-08-19 23:55:52,253 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-08-19 23:55:55,365 - api_client - WARNING - client.py:80 - Request attempt 1 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000025BE698BF00>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 23:55:57,404 - api_client - WARNING - client.py:80 - Request attempt 2 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000025BE9738380>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 23:55:59,436 - api_client - WARNING - client.py:80 - Request attempt 3 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000025BE97385A0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 23:56:22,238 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-08-19 23:56:22,244 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-08-19 23:56:52,254 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-08-19 23:56:52,259 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-08-19 23:56:55,371 - api_client - WARNING - client.py:80 - Request attempt 1 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000025BE97387C0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 23:56:57,413 - api_client - WARNING - client.py:80 - Request attempt 2 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000025BE97389E0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 23:56:59,433 - api_client - WARNING - client.py:80 - Request attempt 3 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000025BE9738C00>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 23:57:22,255 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-08-19 23:57:22,262 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-08-19 23:57:52,275 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-08-19 23:57:52,281 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-08-19 23:57:55,379 - api_client - WARNING - client.py:80 - Request attempt 1 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000025BE9738E20>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 23:57:57,429 - api_client - WARNING - client.py:80 - Request attempt 2 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000025BE698BDF0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 23:57:59,477 - api_client - WARNING - client.py:80 - Request attempt 3 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000025BE698BF00>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 23:58:22,277 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-08-19 23:58:22,283 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-08-19 23:58:52,271 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-08-19 23:58:52,276 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-08-19 23:58:55,373 - api_client - WARNING - client.py:80 - Request attempt 1 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000025BE698BAC0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 23:58:57,412 - api_client - WARNING - client.py:80 - Request attempt 2 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000025BE698B790>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 23:58:59,440 - api_client - WARNING - client.py:80 - Request attempt 3 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000025BE698B570>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 23:59:22,269 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-08-19 23:59:22,276 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-08-19 23:59:52,282 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-08-19 23:59:52,289 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-08-19 23:59:55,353 - api_client - WARNING - client.py:80 - Request attempt 1 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000025BE698B240>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 23:59:57,401 - api_client - WARNING - client.py:80 - Request attempt 2 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000025BE698B460>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-19 23:59:59,446 - api_client - WARNING - client.py:80 - Request attempt 3 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000025BE9738C00>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-20 00:00:22,296 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-08-20 00:00:22,303 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-08-20 00:00:52,322 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-08-20 00:00:52,329 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-08-20 00:00:55,397 - api_client - WARNING - client.py:80 - Request attempt 1 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000025BE97389E0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-20 00:00:57,442 - api_client - WARNING - client.py:80 - Request attempt 2 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000025BE97387C0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-20 00:00:59,488 - api_client - WARNING - client.py:80 - Request attempt 3 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000025BE97385A0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-20 00:01:22,318 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-08-20 00:01:22,322 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-08-20 00:01:52,328 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-08-20 00:01:52,335 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-08-20 00:01:55,402 - api_client - WARNING - client.py:80 - Request attempt 1 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000025BE9738270>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-20 00:01:57,433 - api_client - WARNING - client.py:80 - Request attempt 2 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000025BE9738380>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-20 00:01:59,471 - api_client - WARNING - client.py:80 - Request attempt 3 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000025BE9738050>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-20 00:02:22,344 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-08-20 00:02:22,351 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-08-20 00:02:52,355 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-08-20 00:02:52,363 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-08-20 00:02:55,401 - api_client - WARNING - client.py:80 - Request attempt 1 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000025BE9739150>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-20 00:02:57,433 - api_client - WARNING - client.py:80 - Request attempt 2 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000025BE9739370>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-20 00:02:59,467 - api_client - WARNING - client.py:80 - Request attempt 3 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000025BE9739590>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-20 00:03:22,366 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-08-20 00:03:22,371 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-08-20 00:03:52,378 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-08-20 00:03:52,386 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-08-20 00:03:55,431 - api_client - WARNING - client.py:80 - Request attempt 1 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000025BE97397B0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-20 00:03:57,487 - api_client - WARNING - client.py:80 - Request attempt 2 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000025BE97399D0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-20 00:03:59,524 - api_client - WARNING - client.py:80 - Request attempt 3 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000025BE9739BF0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-20 00:04:22,402 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-08-20 00:04:22,408 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-08-20 00:04:52,409 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-08-20 00:04:52,418 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-08-20 00:04:55,448 - api_client - WARNING - client.py:80 - Request attempt 1 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000025BE9739E10>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-20 00:04:57,493 - api_client - WARNING - client.py:80 - Request attempt 2 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000025BE973A030>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-20 00:04:59,531 - api_client - WARNING - client.py:80 - Request attempt 3 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000025BE973A250>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-08-20 00:05:06,738 - main_window - INFO - main_window.py:364 - Application closing

@@ -1,0 +1,14 @@
+id,device_id,device_name,device_type,status,battery_level,location,created_at,updated_at
+1,DEV001,Main Picker Robot Alpha,Robot,working,85,Zone A Aisle 1,2025-01-15T08:30:00,2025-01-15T14:22:00
+2,DEV002,AGV Transport Unit 1,AGV,working,92,Zone B Loading Dock,2025-01-15T09:15:00,2025-01-15T14:18:00
+3,DEV003,Scanner Station Central,Scanner,working,100,Central Processing,2025-01-14T10:00:00,2025-01-15T12:30:00
+4,DEV004,Conveyor Belt Main,Conveyor,working,100,Main Assembly Line,2025-01-10T14:20:00,2025-01-15T13:45:00
+5,DEV005,Picker Robot Beta,Robot,charging,45,Charging Station 1,2025-01-12T11:30:00,2025-01-15T14:10:00
+6,DEV006,AGV Transport Unit 2,AGV,issues,23,Zone C Storage,2025-01-13T16:45:00,2025-01-15T14:05:00
+7,DEV007,Temperature Sensor A1,Sensor,working,88,Cold Storage Zone A,2025-01-11T07:15:00,2025-01-15T13:55:00
+8,DEV008,Warehouse Controller Main,Controller,working,100,Control Room,2025-01-08T12:00:00,2025-01-15T14:20:00
+9,DEV009,Mobile Scanner Unit 1,Scanner,working,67,Zone D Inspection,2025-01-14T15:30:00,2025-01-15T14:12:00
+10,DEV010,Automated Picker Gamma,Robot,maintenance,0,Maintenance Bay,2025-01-09T13:45:00,2025-01-15T09:30:00
+11,DEV011,AGV Heavy Duty 1,AGV,working,78,Bulk Storage Area,2025-01-12T08:20:00,2025-01-15T14:15:00
+12,DEV012,Quality Control Scanner,Scanner,working,95,QC Station 1,2025-01-13T10:30:00,2025-01-15T13:40:0013,deviceone,deciceone,AGV,maintenance,100,factory,2025-08-09T16:59:28.732178,2025-08-09T16:59:28.732178
+13,deviceone,fr,Controller,maintenance,100,one,2025-08-09T17:25:12.168059,2025-08-09T17:25:12.168059

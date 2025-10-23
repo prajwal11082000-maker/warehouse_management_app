@@ -1,0 +1,12 @@
+id,username,first_name,last_name,email,employee_id,is_active,created_at
+1,jsmith,John,Smith,john.smith@warehouse.com,EMP001,true,2025-01-10T09:00:00
+2,mjohnson,Maria,Johnson,maria.johnson@warehouse.com,EMP002,true,2025-01-10T09:15:00
+3,dwilson,David,Wilson,david.wilson@warehouse.com,EMP003,true,2025-01-10T09:30:00
+4,sbrown,Sarah,Brown,sarah.brown@warehouse.com,EMP004,true,2025-01-10T09:45:00
+5,rlee,Robert,Lee,robert.lee@warehouse.com,EMP005,true,2025-01-11T08:00:00
+6,kgarcia,Karen,Garcia,karen.garcia@warehouse.com,EMP006,false,2025-01-11T08:15:00
+7,mrodriguez,Miguel,Rodriguez,miguel.rodriguez@warehouse.com,EMP007,true,2025-01-11T08:30:00
+8,awong,Amy,Wong,amy.wong@warehouse.com,EMP008,true,2025-01-12T10:00:00
+9,jchen,James,Chen,james.chen@warehouse.com,EMP009,true,2025-01-12T10:15:00
+10,lthompson,Lisa,Thompson,lisa.thompson@warehouse.com,EMP010,false,2025-01-12T10:30:00
+11,nitin,nitin,nitin,nitin@company.com,123321,true,2025-08-11T13:14:49.116872

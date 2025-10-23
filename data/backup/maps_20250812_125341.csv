@@ -1,0 +1,5 @@
+id,name,description,width,height,created_at
+1,Main Warehouse Layout,Primary warehouse floor plan with all zones,1000,800,2025-01-15T08:00:00
+2,Cold Storage Area,Temperature controlled storage zones,600,400,2025-01-14T14:30:00
+3,Loading Dock Layout,Shipping and receiving dock configuration,800,600,2025-01-13T11:15:004,mapnew,,1000,800,2025-08-11T12:22:27.950327
+4,My_map,Testing Map,1000,800,2025-08-12T12:31:36.350269

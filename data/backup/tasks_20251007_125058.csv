@@ -1,0 +1,5 @@
+id,task_id,task_name,task_type,status,assigned_device_id,assigned_user_id,description,estimated_duration,actual_duration,created_at,started_at,completed_at,map_id,zone_ids,stop_ids,task_details
+1,TASK0001,ttsk1,auditing,running,1,,,,,2025-10-03T16:29:35.875329,2025-10-03T16:29:46.383514,,1,,,"{""auditing_map_id"": ""1"", ""auditing_map_name"": ""mp1"", ""barcode"": """"}"
+2,TASK0002,cc1,auditing,completed,2,,,,20,2025-10-04T10:52:28.839264,2025-10-04T10:52:53.215020,2025-10-04T11:13:46.413985,1,,,"{""auditing_map_id"": ""1"", ""auditing_map_name"": ""mp1"", ""barcode"": """"}"
+3,TASK0003,cc2,auditing,running,3,,,,,2025-10-04T10:52:42.303610,2025-10-04T11:33:59.851580,,1,,,"{""auditing_map_id"": ""1"", ""auditing_map_name"": ""mp1"", ""barcode"": """"}"
+4,TASK0004,ttsk1,auditing,running,2,,,,,2025-10-04T11:39:43.452821,2025-10-04T13:16:04.405456,,2,,,"{""auditing_map_id"": ""2"", ""auditing_map_name"": ""map1"", ""barcode"": """"}"

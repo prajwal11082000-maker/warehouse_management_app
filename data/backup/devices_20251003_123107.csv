@@ -1,0 +1,2 @@
+id,device_id,device_name,status,battery_level,current_location,distance,created_at,updated_at
+1,d1,d1,working,100,3,0.00,2025-10-03T11:21:12.679953,2025-10-03T12:30:43.739328

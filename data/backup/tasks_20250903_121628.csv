@@ -1,0 +1,26 @@
+id,task_id,task_name,task_type,status,priority,assigned_device_id,assigned_user_id,description,from_location,to_location,estimated_duration,actual_duration,created_at,started_at,completed_at
+1,TASK0001,Pick Order #1234,picking,completed,high,1,3,Pick items for customer order 1234. SKUs: ITEM001,ITEM002,ITEM003,Zone A Aisle 1,Packing Station 1,25,22,2025-01-15T08:00:00
+2,TASK0002,Restock Zone B Shelves,delivery,running,medium,2,1,Deliver restocked items to Zone B storage shelves,Receiving Dock,Zone B Storage,45,,2025-01-15T09:30:00,2025-01-15T10:00:00,
+3,TASK0003,Audit Inventory Section C,auditing,pending,low,9,2,Complete full inventory audit of Section C storage,Zone C Storage,Zone C Storage,120,,2025-01-15T10:15:00,,
+4,TASK0004,Pick Order #1235,picking,running,urgent,1,3,Emergency pick for priority customer. SKUs: URGENT001,URGENT002,Zone A Aisle 3,Express Shipping,15,,2025-01-15T11:00:00,2025-01-15T11:05:00
+5,TASK0005,Deliver Supplies to QC,delivery,completed,medium,11,4,Transport quality control supplies to inspection station,Supply Storage,QC Station 1,30,28,2025-01-15T07:45:00,2025-01-15T08:00:00,2025-01-15T08:28:00
+6,TASK0006,Pick Bulk Order #5678,picking,pending,high,5,3,Large bulk order picking task. Multiple zones required,Zone A,Bulk Packing Area,90,,2025-01-15T12:30:00,,
+7,TASK0007,Audit Cold Storage Zone,auditing,failed,medium,7,2,Temperature-controlled storage audit - sensor malfunction,Cold Storage Zone A,Cold Storage Zone A,60,,2025-01-15T06:00:00,2025-01-15T06:15:00,2025-01-15T07:00:00
+8,TASK0008,Pick Order #1236,picking,completed,medium,1,3,Standard picking task for regular customer,Zone B Aisle 2,Packing Station 2,20,18,2025-01-15T13:00:00,2025-01-15T13:10:00,2025-01-15T13:28:00
+9,TASK0009,Restock Medical Supplies,delivery,pending,urgent,2,1,Critical medical supply restocking - priority handling,Medical Storage,Zone D Medical,35,,2025-01-15T14:00:00,,
+10,TASK0010,Pick Order #1237,picking,cancelled,low,,,Order cancelled by customer before picking started,Zone A,Shipping,25,,2025-01-15T14:30:00,,
+11,TASK0011,Audit Weekly Count Zone A,auditing,running,high,9,2,Weekly cycle count for Zone A inventory tracking,Zone A Storage,Zone A Storage,180,,2025-01-15T08:30:00,2025-01-15T09:00:00,
+12,TASK0012,Deliver Raw Materials,delivery,completed,medium,11,1,Transport raw materials to production line,Raw Materials Storage,Production Line 1,40,38,2025-01-15T06:30:00,2025-01-15T07:00:00,2025-01-15T07:38:0013
+13,,batchz 1,maintenance,completed,medium,,,Batch created task - batchz 1,,,30,0,2025-08-11T12:35:59.915135,2025-08-12T11:03:01.465463,2025-08-12T11:03:11.819560
+14,,batchz 2,maintenance,pending,medium,,,Batch created task - batchz 2,,,30,,2025-08-11T12:35:59.915135,,
+15,,batchz 3,maintenance,pending,medium,,,Batch created task - batchz 3,,,30,,2025-08-11T12:35:59.916493,,
+16,,batchz 4,maintenance,pending,medium,,,Batch created task - batchz 4,,,30,,2025-08-11T12:35:59.917991,,
+17,,batchz 5,maintenance,pending,medium,,,Batch created task - batchz 5,,,30,,2025-08-11T12:35:59.919463,,
+18,TASK0018,a,storing,pending,,,,,,,30,,2025-08-20T10:49:36.255812,,
+19,TASK0019,vg,picking,pending,,,,,,,30,,2025-08-20T11:00:56.071917,,
+20,TASK0020,avc,picking,completed,,,,,,,30,3,2025-08-20T11:27:55.026841,2025-08-20T11:52:20.360884,2025-08-20T11:55:45.554647
+21,TASK0021,task1,picking,completed,,1,1,,,,30,0,2025-08-20T11:41:28.872776,2025-08-20T11:42:35.728068,2025-08-20T11:43:13.624211
+22,TASK0022,hello,storing,pending,,,,,,,30,,2025-08-20T15:19:42.270778,,
+23,TASK0023,TASK_3,picking,pending,,,,,,,30,,2025-08-20T17:03:43.083856,,
+24,TASK0024,abc,auditing,running,,1,12,,,,30,,2025-08-21T15:15:30.322026,2025-09-03T12:03:51.272919,
+25,TASK0025,abc,picking,running,,,,,,,30,,2025-09-03T12:14:19.567242,2025-09-03T12:14:34.026505,

@@ -1,0 +1,3 @@
+id,device_id,device_name,status,battery_level,location,created_at,updated_at
+1,DEV111,Igno,working,100,,2025-09-05T19:25:49.101524,2025-09-05T19:25:49.101524
+2,A123,ignomagine,working,100,,2025-09-06T12:49:05.252768,2025-09-06T12:49:05.252768

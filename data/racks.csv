@@ -1,0 +1,4 @@
+rack_id,map_name,zone_name,stop_id,rack_distance_mm
+2_STOP_04_LEFT1_1,2,1 -> 2,STOP_04_LEFT1,10
+2_STOP_07_RIGHT2_1,2,1 -> 2,STOP_07_RIGHT2,10
+

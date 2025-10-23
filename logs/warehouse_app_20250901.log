@@ -1,0 +1,58 @@
+2025-09-01 19:15:39,275 - warehouse_app - INFO - main.py:30 - Starting Warehouse Management System v1.0.0
+2025-09-01 19:15:41,013 - main_window - INFO - main_window.py:121 - Dashboard widget loaded successfully
+2025-09-01 19:15:41,038 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-09-01 19:15:41,041 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-09-01 19:15:41,047 - main_window - INFO - main_window.py:131 - Device Management widget loaded successfully
+2025-09-01 19:15:41,153 - main_window - INFO - main_window.py:142 - Task Creation widget loaded successfully
+2025-09-01 19:15:41,190 - main_window - INFO - main_window.py:153 - Task Monitor widget loaded successfully
+2025-09-01 19:15:41,228 - user_management - INFO - user_management.py:581 - Refreshing user data...
+2025-09-01 19:15:41,230 - user_management - INFO - user_management.py:603 - Loaded 12 users from CSV
+2025-09-01 19:15:41,242 - main_window - INFO - main_window.py:163 - User Management widget loaded successfully
+2025-09-01 19:15:41,668 - map_management - INFO - map_management.py:53 - Map Management widget initialized
+2025-09-01 19:15:41,743 - main_window - INFO - main_window.py:174 - Map Management widget loaded successfully
+2025-09-01 19:15:43,795 - api_client - WARNING - client.py:80 - Request attempt 1 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000002601CF1D940>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-09-01 19:15:45,840 - api_client - WARNING - client.py:80 - Request attempt 2 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000002601CEBE490>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-09-01 19:15:47,896 - api_client - WARNING - client.py:80 - Request attempt 3 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000002601CEBE990>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-09-01 19:15:47,897 - warehouse_app - INFO - main.py:46 - Main window created successfully
+2025-09-01 19:15:47,961 - warehouse_app - INFO - main.py:154 - Application started successfully
+2025-09-01 19:15:52,755 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-09-01 19:15:52,758 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-09-01 19:15:52,759 - main_window - INFO - main_window.py:282 - Refreshed data for Device Management
+2025-09-01 19:15:55,414 - main_window - INFO - main_window.py:282 - Refreshed data for Create Task
+2025-09-01 19:15:57,435 - main_window - INFO - main_window.py:282 - Refreshed data for Task Monitor
+2025-09-01 19:16:03,114 - user_management - INFO - user_management.py:581 - Refreshing user data...
+2025-09-01 19:16:03,116 - user_management - INFO - user_management.py:603 - Loaded 12 users from CSV
+2025-09-01 19:16:03,116 - main_window - INFO - main_window.py:282 - Refreshed data for User Management
+2025-09-01 19:16:11,031 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-09-01 19:16:11,035 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-09-01 19:16:11,742 - main_window - INFO - main_window.py:282 - Refreshed data for Task Monitor
+2025-09-01 19:16:21,587 - main_window - INFO - main_window.py:282 - Refreshed data for Map Management
+2025-09-01 19:16:29,473 - user_management - INFO - user_management.py:581 - Refreshing user data...
+2025-09-01 19:16:29,476 - user_management - INFO - user_management.py:603 - Loaded 12 users from CSV
+2025-09-01 19:16:29,477 - main_window - INFO - main_window.py:282 - Refreshed data for User Management
+2025-09-01 19:16:34,710 - main_window - INFO - main_window.py:282 - Refreshed data for Task Monitor
+2025-09-01 19:16:37,331 - main_window - INFO - main_window.py:282 - Refreshed data for Create Task
+2025-09-01 19:16:39,071 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-09-01 19:16:39,074 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-09-01 19:16:39,075 - main_window - INFO - main_window.py:282 - Refreshed data for Device Management
+2025-09-01 19:16:41,034 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-09-01 19:16:41,038 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-09-01 19:16:41,058 - main_window - INFO - main_window.py:282 - Refreshed data for Dashboard
+2025-09-01 19:16:43,799 - api_client - WARNING - client.py:80 - Request attempt 1 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000002601CE2B6F0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-09-01 19:16:45,842 - api_client - WARNING - client.py:80 - Request attempt 2 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000002601CE2BBB0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-09-01 19:16:47,888 - api_client - WARNING - client.py:80 - Request attempt 3 failed: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000026021014DD0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-09-01 19:16:47,908 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-09-01 19:16:47,911 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-09-01 19:16:47,912 - main_window - INFO - main_window.py:282 - Refreshed data for Device Management
+2025-09-01 19:16:52,286 - main_window - INFO - main_window.py:282 - Refreshed data for Create Task
+2025-09-01 19:16:53,637 - main_window - INFO - main_window.py:282 - Refreshed data for Task Monitor
+2025-09-01 19:16:58,709 - user_management - INFO - user_management.py:581 - Refreshing user data...
+2025-09-01 19:16:58,712 - user_management - INFO - user_management.py:603 - Loaded 12 users from CSV
+2025-09-01 19:16:58,713 - main_window - INFO - main_window.py:282 - Refreshed data for User Management
+2025-09-01 19:17:00,778 - main_window - INFO - main_window.py:282 - Refreshed data for Map Management
+2025-09-01 19:17:02,001 - user_management - INFO - user_management.py:581 - Refreshing user data...
+2025-09-01 19:17:02,004 - user_management - INFO - user_management.py:603 - Loaded 12 users from CSV
+2025-09-01 19:17:02,005 - main_window - INFO - main_window.py:282 - Refreshed data for User Management
+2025-09-01 19:17:11,039 - device_list - INFO - device_list.py:241 - Refreshing device data...
+2025-09-01 19:17:11,044 - device_list - INFO - device_list.py:261 - Loaded 12 devices from CSV
+2025-09-01 19:17:11,285 - main_window - INFO - main_window.py:364 - Application closing

@@ -1,0 +1,3 @@
+id,task_id,task_name,task_type,status,assigned_device_id,assigned_user_id,description,estimated_duration,actual_duration,created_at,started_at,completed_at,map_id,zone_ids,stop_ids,task_details
+
+1,TASK0001,123,picking,pending,2,,,,,2025-09-06T12:49:40.891823,,,118,182,STOP_01_LEFT1,"{""pickup_map_id"": ""118"", ""pickup_map_name"": ""bhj"", ""drop_zone_id"": ""182"", ""drop_zone_name"": ""1 \u2192 2"", ""drop_stops"": [""STOP_01_LEFT1""], ""drop_stop_names"": [""Stop 1 - Left Bin 1 (STOP_01_LEFT1)""]}"

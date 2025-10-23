@@ -1,0 +1,8 @@
+PyQt5
+requests
+pandas
+python-dateutil
+Pillow
+matplotlib
+numpy
+api

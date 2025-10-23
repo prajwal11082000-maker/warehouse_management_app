@@ -1,0 +1,3 @@
+id,task_id,task_name,task_type,status,assigned_device_id,assigned_user_id,description,estimated_duration,actual_duration,created_at,started_at,completed_at,map_id,zone_ids,stop_ids,task_details
+1,TASK0001,ttsk1,auditing,running,1,,,,,2025-10-03T16:29:35.875329,2025-10-03T16:29:46.383514,,1,,,"{""auditing_map_id"": ""1"", ""auditing_map_name"": ""mp1"", ""barcode"": """"}"
+2,TASK0002,tttt,auditing,pending,5,,,,,2025-10-08T16:48:50.566945,,,3,,,"{""auditing_map_id"": ""3"", ""auditing_map_name"": ""k"", ""barcode"": """"}"
