@@ -1147,39 +1147,57 @@ class MapCanvas(QWidget):
                             dx /= length
                             dy /= length
                             
-                            # Perpendicular vector (-dy, dx) for left side, (dy, -dx) for right side
-                            # Same offset distance for both left and right bins to keep stops close to line
-                            offset_distance = 10  # pixels from the connection line for both sides
-                            
-                            # Determine which side to place the stop based on the stop name/description
-                            stop_name = stop.get('name', '').lower()
-                            stop_description = stop.get('description', '').lower()
-                            
-                            # Check both name and description for "left bin" or "right bin"
-                            is_left_bin = 'left bin' in stop_name or 'left bin' in stop_description
-                            is_right_bin = 'right bin' in stop_name or 'right bin' in stop_description
-                            
-                            if is_right_bin:
-                                # Place on right side
-                                perp_x = -dy * offset_distance
-                                perp_y = dx * offset_distance
-                            elif is_left_bin:
-                                # Place on left side
+                            # Determine side and offset using new stop_type if available
+                            stop_type = str(stop.get('stop_type', '') or '').lower()
+                            perp_x = 0
+                            perp_y = 0
+                            if stop_type == 'left':
+                                try:
+                                    offset_distance = float(stop.get('left_bins_distance', 0) or 0)
+                                except Exception:
+                                    offset_distance = 0
+                                # Left: perpendicular (dy, -dx)
                                 perp_x = dy * offset_distance
                                 perp_y = -dx * offset_distance
+                            elif stop_type == 'right':
+                                try:
+                                    offset_distance = float(stop.get('right_bins_distance', 0) or 0)
+                                except Exception:
+                                    offset_distance = 0
+                                # Right: perpendicular (-dy, dx)
+                                perp_x = -dy * offset_distance
+                                perp_y = dx * offset_distance
+                            elif stop_type == 'center':
+                                # Center: no lateral offset
+                                perp_x = 0
+                                perp_y = 0
                             else:
-                                # If no clear indication in name, check bin counts
-                                left_bins = float(stop.get('left_bins_count', 0))
-                                right_bins = float(stop.get('right_bins_count', 0))
-                                
-                                if left_bins > 0 and right_bins == 0:
-                                    # Place on left side
+                                # Legacy fallback behavior (pre-stop_type): infer by name/counts
+                                stop_name = str(stop.get('name', '') or '').lower()
+                                stop_description = str(stop.get('description', '') or '').lower()
+                                is_left_bin = 'left bin' in stop_name or 'left bin' in stop_description
+                                is_right_bin = 'right bin' in stop_name or 'right bin' in stop_description
+                                # Default pixel offset when not provided
+                                offset_distance = 10
+                                if is_right_bin:
                                     perp_x = -dy * offset_distance
                                     perp_y = dx * offset_distance
-                                else:
-                                    # Place on right side by default
+                                elif is_left_bin:
                                     perp_x = dy * offset_distance
                                     perp_y = -dx * offset_distance
+                                else:
+                                    left_bins = float(stop.get('left_bins_count', 0) or 0)
+                                    right_bins = float(stop.get('right_bins_count', 0) or 0)
+                                    if left_bins > 0 and right_bins == 0:
+                                        perp_x = dy * offset_distance
+                                        perp_y = -dx * offset_distance
+                                    elif right_bins > 0 and left_bins == 0:
+                                        perp_x = -dy * offset_distance
+                                        perp_y = dx * offset_distance
+                                    else:
+                                        # Default: center
+                                        perp_x = 0
+                                        perp_y = 0
                             
                             # Calculate final position
                             x = base_x + perp_x

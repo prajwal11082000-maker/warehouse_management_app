@@ -2332,108 +2332,175 @@ class MapManagementWidget(QWidget):
 
     def generate_stops(self):
         """Generate stops for selected zone using intelligent position calculation (rack config removed)"""
-
         zone_id = self.zone_for_stops_combo.currentData()
         if not zone_id:
             QMessageBox.warning(self, "No Zone", "Please select a zone first")
             return
 
         try:
-            # Get zone data
             zone = next((z for z in self.current_zones if str(z.get('id')) == str(zone_id)), None)
             if not zone:
                 QMessageBox.warning(self, "Error", "Selected zone not found")
                 return
 
+            # If Stop Type UI is present, use single-stop generation based on it
+            if hasattr(self, 'stop_type_combo') and hasattr(self, 'distance_from_zone_input'):
+                st = self.stop_type_combo.currentText().lower()
+                dist_m = float(self.distance_from_zone_input.value())
+                side_m = float(self.side_distance_input.value()) if st in ('left', 'right') else 0.0
 
-            
-            # Import and use the EXACT position calculator
+                from_x = zone.get('from_x', 100)
+                from_y = zone.get('from_y', 100)
+                magnitude = float(zone.get('magnitude', 50))
+                direction = zone.get('direction', 'east')
+                direction_vectors = {
+                    'north': (0, -1),
+                    'south': (0, 1),
+                    'east': (1, 0),
+                    'west': (-1, 0),
+                    'northeast': (0.707, -0.707),
+                    'northwest': (-0.707, -0.707),
+                    'southeast': (0.707, 0.707),
+                    'southwest': (-0.707, 0.707)
+                }
+                dx, dy = direction_vectors.get(direction.lower(), (1, 0))
+                to_x = from_x + dx * magnitude
+                to_y = from_y + dy * magnitude
+
+                # Clamp distance to the edge length to avoid overshoot in path planning
+                dist_m = max(0.0, min(dist_m, magnitude))
+                # Compute base along-line position from clamped distance
+                progress = 0.0 if magnitude <= 0 else dist_m / magnitude
+                base_x = from_x + (to_x - from_x) * progress
+                base_y = from_y + (to_y - from_y) * progress
+
+                # Compute lateral offset in pixels (1m ~ 1px in current mapping)
+                import math
+                seg_dx = to_x - from_x
+                seg_dy = to_y - from_y
+                seg_len = math.sqrt(seg_dx * seg_dx + seg_dy * seg_dy)
+                if seg_len > 0:
+                    seg_dx /= seg_len
+                    seg_dy /= seg_len
+                perp_lx = seg_dy
+                perp_ly = -seg_dx
+                perp_rx = -seg_dy
+                perp_ry = seg_dx
+                if st == 'left':
+                    disp_x = base_x + perp_lx * side_m
+                    disp_y = base_y + perp_ly * side_m
+                elif st == 'right':
+                    disp_x = base_x + perp_rx * side_m
+                    disp_y = base_y + perp_ry * side_m
+                else:
+                    disp_x = base_x
+                    disp_y = base_y
+
+                # Determine next stop number
+                existing_stop_numbers = []
+                for existing_stop in self.current_stops:
+                    s_id = existing_stop.get('stop_id', '')
+                    if s_id.startswith('STOP_'):
+                        try:
+                            parts = s_id.split('_')
+                            if len(parts) >= 2:
+                                num = int(parts[1])
+                                existing_stop_numbers.append(num)
+                        except Exception:
+                            continue
+                next_num = max(existing_stop_numbers) + 1 if existing_stop_numbers else 1
+
+                # Compose fields
+                stop_id = f"STOP_{next_num:02d}_{st.upper()}"
+                name = f"Stop {next_num} - {st.title()}"
+                left_count = 1 if st == 'left' else 0
+                right_count = 1 if st == 'right' else 0
+                left_dist = side_m if st == 'left' else 0.0
+                right_dist = side_m if st == 'right' else 0.0
+
+                stop_row = {
+                    'id': self.csv_handler.get_next_id('stops'),
+                    'zone_connection_id': zone_id,
+                    'map_id': self.selected_map_id,
+                    'stop_id': stop_id,
+                    'name': name,
+                    'x_coordinate': disp_x,
+                    'y_coordinate': disp_y,
+                    'display_x': disp_x,
+                    'display_y': disp_y,
+                    'left_bins_count': left_count,
+                    'right_bins_count': right_count,
+                    'left_bins_distance': left_dist,
+                    'right_bins_distance': right_dist,
+                    'distance_from_start': dist_m,
+                    'stop_type': st,
+                    'created_at': datetime.now().isoformat(),
+                }
+
+                if not self.csv_handler.append_to_csv('stops', stop_row):
+                    raise Exception("Failed to save stop")
+
+                QMessageBox.information(self, "Success", f"Generated 1 stop at {dist_m:.2f}m ({st.title()})")
+                self.load_map_data(self.selected_map_id)
+                return
+
+            # Fallback to existing exact-bin generation if new UI not present
             from exact_bin_integration import ExactBinIntegration
             integration = ExactBinIntegration()
-            
-            # Generate coordinates for zones if they don't exist
-            from_x = zone.get('from_x', 100)  # Default starting point
+
+            from_x = zone.get('from_x', 100)
             from_y = zone.get('from_y', 100)
-            
-            # Calculate end coordinates based on direction and distance
             magnitude = float(zone.get('magnitude', 50))
-            direction = zone.get('direction', 'east')  # Default direction
-            
-            # Use direction to calculate end coordinates - CORRECT MAPPING
-            # south=down, north=up, east=right, west=left
+            direction = zone.get('direction', 'east')
             direction_vectors = {
-                'north': (0, -1),   # UP (negative Y)
-                'south': (0, 1),    # DOWN (positive Y)
-                'east': (1, 0),     # RIGHT (positive X)
-                'west': (-1, 0),    # LEFT (negative X)
-                'northeast': (0.707, -0.707), 
+                'north': (0, -1),
+                'south': (0, 1),
+                'east': (1, 0),
+                'west': (-1, 0),
+                'northeast': (0.707, -0.707),
                 'northwest': (-0.707, -0.707),
-                'southeast': (0.707, 0.707), 
+                'southeast': (0.707, 0.707),
                 'southwest': (-0.707, 0.707)
             }
-            
             dx, dy = direction_vectors.get(direction.lower(), (1, 0))
             to_x = from_x + dx * magnitude
             to_y = from_y + dy * magnitude
-            
 
-            
-            # Prepare zone data for exact calculation
             zone_data_for_calc = {
                 'from_x': from_x,
                 'from_y': from_y,
                 'to_x': to_x,
                 'to_y': to_y,
                 'magnitude': magnitude,
-                'left_bins_count': self.left_bins_input.value(),
-                'right_bins_count': self.right_bins_input.value(),
-                'bin_offset_distance': 2.0,  # Default offset distance
-                'left_bins_distance': self.left_bin_distance_input.value(),
-                'right_bins_distance': self.right_bin_distance_input.value(),
+                'left_bins_count': self.left_bins_input.value() if hasattr(self, 'left_bins_input') else 0,
+                'right_bins_count': self.right_bins_input.value() if hasattr(self, 'right_bins_input') else 0,
+                'bin_offset_distance': 2.0,
+                'left_bins_distance': self.left_bin_distance_input.value() if hasattr(self, 'left_bin_distance_input') else 0.0,
+                'right_bins_distance': self.right_bin_distance_input.value() if hasattr(self, 'right_bin_distance_input') else 0.0,
                 'from_zone': zone.get('from_zone', 'A'),
                 'to_zone': zone.get('to_zone', 'B')
             }
-            
-            # Use exact bin calculator to get proper stop positions
             exact_result = integration.calculate_bins_for_ui(zone_data_for_calc)
-            
             if not exact_result.get('success'):
                 raise Exception("Failed to calculate exact bin positions")
-            
-            # Extract sequential stops from the result
             sequential_stops = exact_result['calculated_bins']['sequential_stops']
-            
 
-            
-            # Find the highest existing stop number for continuous numbering
             existing_stop_numbers = []
             for existing_stop in self.current_stops:
                 stop_id = existing_stop.get('stop_id', '')
-                # Extract stop number from stop_id format like "STOP_01_RIGHT1" or "STOP_05_LEFT2"
                 if stop_id.startswith('STOP_'):
                     try:
-                        # Split by underscore and get the number part
                         parts = stop_id.split('_')
                         if len(parts) >= 2:
-                            stop_number = int(parts[1])  # Get the number part (e.g., "01" -> 1)
+                            stop_number = int(parts[1])
                             existing_stop_numbers.append(stop_number)
                     except (ValueError, IndexError):
                         continue
-            
-            # Determine the starting stop number for new stops
-            if existing_stop_numbers:
-                next_stop_number = max(existing_stop_numbers) + 1
-                
-            else:
-                next_stop_number = 1
+            next_stop_number = max(existing_stop_numbers) + 1 if existing_stop_numbers else 1
 
-            
-            # Convert to CSV format and save all stops with continuous numbering
             stops_saved = 0
             for i, stop_info in enumerate(sequential_stops):
-                # Calculate the actual stop number (continuous from existing stops)
                 actual_stop_number = next_stop_number + i
-                
                 stop_data = {
                     'id': self.csv_handler.get_next_id('stops'),
                     'zone_connection_id': zone_id,
@@ -2442,27 +2509,18 @@ class MapManagementWidget(QWidget):
                     'name': f"Stop {actual_stop_number} - {stop_info['side'].title()} Bin {stop_info['bin_number']}",
                     'x_coordinate': stop_info['coordinates']['x'],
                     'y_coordinate': stop_info['coordinates']['y'],
-                    'display_x': stop_info['coordinates']['x'],  # For map viewer compatibility
-                    'display_y': stop_info['coordinates']['y'],  # For map viewer compatibility
-                    'left_bins_count': self.left_bins_input.value(),
-                    'right_bins_count': self.right_bins_input.value(),
-                    'left_bins_distance': self.left_bin_distance_input.value(),
-                    'right_bins_distance': self.right_bin_distance_input.value(),
+                    'display_x': stop_info['coordinates']['x'],
+                    'display_y': stop_info['coordinates']['y'],
+                    'left_bins_count': self.left_bins_input.value() if hasattr(self, 'left_bins_input') else 0,
+                    'right_bins_count': self.right_bins_input.value() if hasattr(self, 'right_bins_input') else 0,
+                    'left_bins_distance': self.left_bin_distance_input.value() if hasattr(self, 'left_bin_distance_input') else 0.0,
+                    'right_bins_distance': self.right_bin_distance_input.value() if hasattr(self, 'right_bin_distance_input') else 0.0,
                     'distance_from_start': stop_info['distance_from_start'],
                     'created_at': datetime.now().isoformat()
                 }
-                
                 if self.csv_handler.append_to_csv('stops', stop_data):
                     stops_saved += 1
-                    coords = stop_info['coordinates']
-
-                else:
-                    print(f"DEBUG: Failed to save stop: {stop_data['stop_id']}")
-            
-            # Use the exact result's message and include stop positioning details only
             success_message = exact_result['message']
-            
-            # Create detailed summary with stop positioning from exact calculation with correct numbering
             summary_text = "Stop Positioning:"
             for i, stop_info in enumerate(sequential_stops):
                 actual_stop_number = next_stop_number + i
@@ -2470,9 +2528,7 @@ class MapManagementWidget(QWidget):
                 summary_text += f"\nStop {actual_stop_number}: {stop_info['distance_from_start']:.2f}m from start"
                 summary_text += f"\n  Position: ({coords['x']:.1f}, {coords['y']:.1f})"
                 summary_text += f"\n  Bins: 1 (1 {stop_info['side']}, 0 other)"
-            
-            QMessageBox.information(self, "Success", 
-                f"{success_message}\n\n{summary_text}")
+            QMessageBox.information(self, "Success", f"{success_message}\n\n{summary_text}")
             self.load_map_data(self.selected_map_id)
 
         except Exception as e:
@@ -2726,108 +2782,36 @@ class MapManagementWidget(QWidget):
         
         form_layout.addRow("Zone:", zone_frame)
         
-        # Bin configuration with improved layout
-        bins_frame = QFrame()
-        bins_frame.setStyleSheet("background-color: #454545; border-radius: 6px; padding: 6px;")
-        bins_layout = QHBoxLayout(bins_frame)
-        bins_layout.setContentsMargins(6, 6, 6, 6)
-        bins_layout.setSpacing(8)
+        # Stop type selection
+        self.stop_type_combo = QComboBox()
+        self.stop_type_combo.addItems(["Center", "Left", "Right"])
+        self.stop_type_combo.currentTextChanged.connect(self.validate_stop_inputs)
+        self.stop_type_combo.currentTextChanged.connect(self.update_stop_type_fields)
+        self.apply_combo_style(self.stop_type_combo)
+        form_layout.addRow("Stop Type:", self.stop_type_combo)
         
-        # Left bins section with better styling
-        left_frame = QFrame()
-        left_frame.setStyleSheet("background-color: #505050; border-radius: 5px; padding: 6px;")
-        left_layout = QVBoxLayout(left_frame)
-        left_layout.setSpacing(6)
+        # Distance from zone (meters)
+        self.distance_from_zone_label = QLabel("Distance from Zone (m)")
+        self.distance_from_zone_input = QDoubleSpinBox()
+        self.distance_from_zone_input.setRange(0.0, 10000.0)
+        self.distance_from_zone_input.setDecimals(2)
+        self.distance_from_zone_input.setSingleStep(0.1)
+        self.distance_from_zone_input.setValue(1.0)
+        self.apply_input_style(self.distance_from_zone_input)
+        form_layout.addRow(self.distance_from_zone_label, self.distance_from_zone_input)
         
-        left_label = QLabel("Left")
-        left_label.setStyleSheet("color: #ffffff; font-weight: bold; font-size: 13px; margin-bottom: 5px;")
-        left_label.setAlignment(Qt.AlignCenter)
-        left_layout.addWidget(left_label)
+        # Side distance (meters) - shown only for Left/Right
+        self.side_distance_label = QLabel("Side Distance (m)")
+        self.side_distance_input = QDoubleSpinBox()
+        self.side_distance_input.setRange(0.0, 10000.0)
+        self.side_distance_input.setDecimals(2)
+        self.side_distance_input.setSingleStep(0.1)
+        self.side_distance_input.setValue(2.0)
+        self.apply_input_style(self.side_distance_input)
+        form_layout.addRow(self.side_distance_label, self.side_distance_input)
         
-        self.left_bins_input = QSpinBox()
-        self.left_bins_input.setRange(0, 50)
-        self.left_bins_input.setValue(2)
-        self.left_bins_input.valueChanged.connect(self.validate_stop_inputs)
-        self.apply_input_style(self.left_bins_input)
-        left_layout.addWidget(self.left_bins_input)
-        
-        # Left bin distance with better label
-        distance_label = QLabel("Distance (m)")
-        distance_label.setStyleSheet("color: #cccccc; font-size: 11px; margin-top: 2px;")
-        distance_label.setAlignment(Qt.AlignCenter)
-        left_layout.addWidget(distance_label)
-        
-        self.left_bin_distance_input = QDoubleSpinBox()
-        self.left_bin_distance_input.setRange(0.1, 10.0)
-        self.left_bin_distance_input.setValue(2.0)
-        self.left_bin_distance_input.setSingleStep(0.1)
-        self.left_bin_distance_input.setDecimals(1)
-        self.apply_input_style(self.left_bin_distance_input)
-        left_layout.addWidget(self.left_bin_distance_input)
-        bins_layout.addWidget(left_frame)
-        
-        # Quick adjust buttons with better vertical alignment
-        adjust_layout = QVBoxLayout()
-        adjust_layout.setContentsMargins(0, 0, 0, 0)
-        adjust_layout.addStretch()
-        
-        match_btn = QPushButton("↔")
-        match_btn.setToolTip("Match left and right bin counts")
-        match_btn.clicked.connect(self.match_bin_counts)
-        match_btn.setStyleSheet("""
-            QPushButton {
-                background-color: #ff6b35;
-                color: white;
-                border: none;
-                padding: 8px;
-                border-radius: 4px;
-                font-size: 14px;
-                font-weight: bold;
-                min-width: 36px;
-                min-height: 36px;
-            }
-            QPushButton:hover { 
-                background-color: #e55a2a; 
-            }
-        """)
-        adjust_layout.addWidget(match_btn)
-        adjust_layout.addStretch()
-        bins_layout.addLayout(adjust_layout)
-        
-        # Right bins section with better styling
-        right_frame = QFrame()
-        right_frame.setStyleSheet("background-color: #505050; border-radius: 5px; padding: 6px;")
-        right_layout = QVBoxLayout(right_frame)
-        right_layout.setSpacing(6)
-        
-        right_label = QLabel("Right")
-        right_label.setStyleSheet("color: #ffffff; font-weight: bold; font-size: 13px; margin-bottom: 5px;")
-        right_label.setAlignment(Qt.AlignCenter)
-        right_layout.addWidget(right_label)
-        
-        self.right_bins_input = QSpinBox()
-        self.right_bins_input.setRange(0, 50)
-        self.right_bins_input.setValue(2)
-        self.right_bins_input.valueChanged.connect(self.validate_stop_inputs)
-        self.apply_input_style(self.right_bins_input)
-        right_layout.addWidget(self.right_bins_input)
-        
-        # Right bin distance with better label
-        distance_label = QLabel("Distance (m)")
-        distance_label.setStyleSheet("color: #cccccc; font-size: 11px; margin-top: 2px;")
-        distance_label.setAlignment(Qt.AlignCenter)
-        right_layout.addWidget(distance_label)
-        
-        self.right_bin_distance_input = QDoubleSpinBox()
-        self.right_bin_distance_input.setRange(0.1, 10.0)
-        self.right_bin_distance_input.setValue(2.0)
-        self.right_bin_distance_input.setSingleStep(0.1)
-        self.right_bin_distance_input.setDecimals(1)
-        self.apply_input_style(self.right_bin_distance_input)
-        right_layout.addWidget(self.right_bin_distance_input)
-        bins_layout.addWidget(right_frame)
-        
-        form_layout.addRow("Bins:", bins_frame)
+        # Initialize visibility based on default Stop Type selection
+        self.update_stop_type_fields()
         
         # Rack levels configuration removed
         
@@ -3253,6 +3237,15 @@ class MapManagementWidget(QWidget):
         self.right_bins_input.setValue(left_count)
         self.validate_stop_inputs()
     
+    def update_stop_type_fields(self):
+        """Show or hide side distance field based on selected stop type"""
+        st = self.stop_type_combo.currentText().lower() if hasattr(self, 'stop_type_combo') else 'center'
+        show_side = st in ('left', 'right')
+        if hasattr(self, 'side_distance_label'):
+            self.side_distance_label.setVisible(show_side)
+        if hasattr(self, 'side_distance_input'):
+            self.side_distance_input.setVisible(show_side)
+    
     # Rack level change and height preview removed
     
     def validate_stop_inputs(self):
@@ -3266,12 +3259,22 @@ class MapManagementWidget(QWidget):
         else:
             self.zone_validation_icon.hide()
         
-        # Check bin counts
-        total_bins = self.left_bins_input.value() + self.right_bins_input.value()
-        if total_bins == 0:
-            issues.append("No bins configured")
-        elif total_bins > 20:
-            issues.append(f"High bin count ({total_bins}) may impact performance")
+        # Validate stop type related fields
+        if hasattr(self, 'stop_type_combo') and hasattr(self, 'distance_from_zone_input'):
+            st = self.stop_type_combo.currentText().lower()
+            if self.distance_from_zone_input.value() < 0:
+                issues.append("Distance from zone must be >= 0m")
+            if st in ('left', 'right'):
+                if hasattr(self, 'side_distance_input') and self.side_distance_input.value() <= 0:
+                    issues.append("Side distance must be > 0m for Left/Right")
+        
+        # Check bin counts (legacy UI only)
+        if hasattr(self, 'left_bins_input') and hasattr(self, 'right_bins_input'):
+            total_bins = self.left_bins_input.value() + self.right_bins_input.value()
+            if total_bins == 0:
+                issues.append("No bins configured")
+            elif total_bins > 20:
+                issues.append(f"High bin count ({total_bins}) may impact performance")
         
         # Rack configuration validation removed
         
