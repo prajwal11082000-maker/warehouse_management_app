@@ -140,6 +140,7 @@ class Stop:
     distance_from_start_m: float
     side: str  # 'left'|'right'
     side_distance_m: float
+    stop_type: str  # 'left'|'right'|'center'|''
 
 
 def infer_side(stop_row: Dict[str, Any]) -> str:
@@ -186,9 +187,23 @@ def load_stops(stops_rows: List[Dict[str, str]], map_id: str) -> Dict[int, List[
         try:
             conn_id = int(r['zone_connection_id'])
             dist_m = float(r['distance_from_start'])
-            side = infer_side(r)
-            # choose side distance field by side
-            side_dist_m = float(r['left_bins_distance'] if side == 'left' else r['right_bins_distance'])
+            # Stop type from CSV (may be missing in legacy rows)
+            stype = str(r.get('stop_type', '') or '').strip().lower()
+            # Prefer explicit stop_type for side; otherwise infer
+            if stype in ('left', 'right'):
+                side = stype
+            else:
+                side = infer_side(r)
+            # Robust parse for distances; treat N/A or blanks as 0
+            def _to_float(val: Any) -> float:
+                try:
+                    return float(val)
+                except Exception:
+                    return 0.0
+            left_d = _to_float(r.get('left_bins_distance'))
+            right_d = _to_float(r.get('right_bins_distance'))
+            # For center, no lateral movement
+            side_dist_m = 0.0 if stype == 'center' else (left_d if side == 'left' else right_d)
             by_conn.setdefault(conn_id, []).append(
                 Stop(
                     connection_id=conn_id,
@@ -196,6 +211,7 @@ def load_stops(stops_rows: List[Dict[str, str]], map_id: str) -> Dict[int, List[
                     distance_from_start_m=dist_m,
                     side=side,
                     side_distance_m=side_dist_m,
+                    stop_type=stype,
                 )
             )
         except Exception:
@@ -244,13 +260,18 @@ def generate_edge_commands(
     for stop in stops_on_edge:
         # Go forward to stop longitudinal position
         forward_to(stop.distance_from_start_m)
-        # Side approach and return
-        if stop.side == 'left':
-            commands.append(('SL', mm(stop.side_distance_m), 'MM'))
-            commands.append(('SR', mm(stop.side_distance_m), 'MM'))
+        # If center stop or side distance is 0/N/A, wait-in instead of lateral move
+        stype = (stop.stop_type or '').lower()
+        if stype == 'center' or (stop.side_distance_m is None or stop.side_distance_m <= 0.0):
+            commands.append(('WAITIN', 2, 5, 1))
         else:
-            commands.append(('SR', mm(stop.side_distance_m), 'MM'))
-            commands.append(('SL', mm(stop.side_distance_m), 'MM'))
+            # Side approach and return
+            if stop.side == 'left':
+                commands.append(('SL', mm(stop.side_distance_m), 'MM'))
+                commands.append(('SR', mm(stop.side_distance_m), 'MM'))
+            else:
+                commands.append(('SR', mm(stop.side_distance_m), 'MM'))
+                commands.append(('SL', mm(stop.side_distance_m), 'MM'))
 
     # Finish remaining forward distance to end of edge
     forward_to(total_m)
