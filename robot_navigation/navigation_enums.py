@@ -123,12 +123,12 @@ class NavigationConstants:
     U_TURN_MOTOR_VALUE: float = 45.0
     U_TURN_DRIVE_RANGES = [
         {
-            'right_drive': (1000, 1200),
-            'left_drive': (-1200, -1000)
+            'right_drive': (610, 1200),
+            'left_drive': (-1200, -610)
         },
         {
-            'right_drive': (-1200, -1000),
-            'left_drive': (1000, 1200)
+            'right_drive': (-1200, -610),
+            'left_drive': (610, 1200)
         }
     ]
 

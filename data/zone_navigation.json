@@ -132,10 +132,10 @@
       "last_turn_zone": "2"
     },
     "rob2": {
-      "current_zone": "2",
-      "locked_direction": null,
+      "current_zone": "1",
+      "locked_direction": "north",
       "target_zone": null,
-      "lock_timestamp": null,
+      "lock_timestamp": 1761544795.2338011,
       "turn_type": null,
       "device_id": "rob2",
       "is_transitioning": false,
@@ -192,5 +192,5 @@
       "last_turn_zone": null
     }
   },
-  "last_saved": 1761052787.681169
+  "last_saved": 1761544895.1764648
 }
