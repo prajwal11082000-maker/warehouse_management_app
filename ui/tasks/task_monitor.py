@@ -1,4 +1,4 @@
-﻿from PyQt5.QtWidgets import (QWidget, QVBoxLayout, QHBoxLayout, QPushButton,
+from PyQt5.QtWidgets import (QWidget, QVBoxLayout, QHBoxLayout, QPushButton,
                              QLabel, QComboBox, QMessageBox, QFrame, QSplitter,
                              QTableWidget, QTableWidgetItem, QHeaderView, QAbstractItemView, QDialog, QProgressBar)
 from PyQt5.QtCore import Qt, QTimer, pyqtSignal
@@ -430,7 +430,7 @@ class TaskMonitorWidget(QWidget):
 
         status = self.selected_task.get('status', '').lower()
 
-        self.start_task_btn.setEnabled(status == 'pending')
+        self.start_task_btn.setEnabled(status in ['pending', 'completed'])
         self.complete_task_btn.setEnabled(status == 'running')
         self.cancel_task_btn.setEnabled(status in ['pending', 'running'])
         self.view_details_btn.setEnabled(True)

@@ -15,6 +15,7 @@ from PyQt5.QtCore import QCoreApplication
 from config.settings import APP_NAME, APP_VERSION, WINDOW_SIZE, RESOURCES_DIR
 from utils.logger import setup_logger
 from data_manager.csv_handler import CSVHandler
+from data_manager.device_data_handler import DeviceDataHandler
 
 
 class WarehouseApp(QApplication):
@@ -33,6 +34,12 @@ class WarehouseApp(QApplication):
         # Initialize CSV handler
         self.csv_handler = CSVHandler()
         self.csv_handler.initialize_csv_files()
+
+        self.device_data_handler = DeviceDataHandler()
+        self._call_runner_timer = QTimer()
+        self._call_runner_timer.setInterval(2000)
+        self._call_runner_timer.timeout.connect(lambda: self.device_data_handler.auto_append_run_task_if_pending_call('rob1', 'TASK0001'))
+        self._call_runner_timer.start()
 
         # Set application style
         self.setStyle('Fusion')

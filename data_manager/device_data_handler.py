@@ -714,3 +714,37 @@ class DeviceDataHandler:
         except Exception as e:
             self.logger.error(f"Error reading distance for device {device_id}: {e}")
             return 0.0
+
+    def auto_append_run_task_if_pending_call(self, device_id: str, task_id: str) -> bool:
+        try:
+            call_path = self.data_dir / 'call_requests.csv'
+            if not call_path.exists():
+                return False
+            last_call = None
+            with open(call_path, 'r', encoding='utf-8') as f:
+                reader = csv.DictReader(f)
+                for row in reader:
+                    last_call = row
+            if not last_call:
+                return False
+            if str(last_call.get('status', '')).strip().lower() != 'pending':
+                return False
+            task_path = self.data_dir / f"{device_id}_task.csv"
+            if not task_path.exists():
+                return False
+            last_task = None
+            with open(task_path, 'r', encoding='utf-8') as f:
+                reader = csv.DictReader(f)
+                for row in reader:
+                    last_task = row
+            if not last_task:
+                return False
+            if (
+                str(last_task.get('task_id')) == str(task_id)
+                and str(last_task.get('task_status', '')).strip().lower() == 'task_completed'
+            ):
+                return self.append_task_to_device(device_id, task_id, 'run_task')
+            return False
+        except Exception as e:
+            self.logger.error(f"Error in auto_append_run_task_if_pending_call for {device_id}/{task_id}: {e}")
+            return False

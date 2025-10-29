@@ -304,7 +304,7 @@ class MapCanvas(QWidget):
             first_connection = zone_connections[start_zone][0]
             target_zone = first_connection['to']
             direction = first_connection['direction']
-            distance = min(first_connection['distance'] * 250, 1500)
+            distance = min(first_connection['distance'] * 50, 1500)
             
             # Get direction vector for first connection
             dx, dy = direction_vectors.get(direction, (1, 0))
@@ -343,7 +343,7 @@ class MapCanvas(QWidget):
                     continue
                 
                 direction = connection['direction']
-                distance = min(connection['distance'] * 250, 1500)  # Scale (250 px/m) and cap distance
+                distance = min(connection['distance'] * 50, 1500)  # Scale (250 px/m) and cap distance
                 
                 # Get direction vector
                 dx, dy = direction_vectors.get(direction, (1, 0))
@@ -705,7 +705,6 @@ class MapCanvas(QWidget):
                             if desired_turn in ['left','right']:
                                 self.robot.set_direction_for_turn_only(desired_dir, desired_turn)
                             else:
-                                # Persist previously locked direction without a new turn
                                 self.robot.force_lock_direction(desired_dir, 'inherited')
                     maintained_direction = self.robot.maintain_direction_across_zones()
                 return QPointF(zone_x, zone_y)
@@ -899,7 +898,7 @@ class MapCanvas(QWidget):
             Tuple of (x, y) coordinates for robot position
         """
         # Convert mm to map pixels (scale factor - adjust as needed)
-        pixel_scale = 0.25  # 1mm = 0.25 px (50 px per 200 mm = 250 px per meter)
+        pixel_scale = 0.05  # 1mm = 0.05 px (50 px per 1000 mm = 50 px per meter)
         distance_pixels = distance * pixel_scale
         
         # If stationary or no distance, robot stays at zone center
@@ -1591,6 +1590,7 @@ class MapCanvas(QWidget):
                 int(tick_x - perp_x/2), int(tick_y - perp_y/2),
                 int(tick_x + perp_x/2), int(tick_y + perp_y/2)
             )
+    
     
     def draw_connection_labels(self, painter, zone, from_x, from_y, to_x, to_y):
         """Draw comprehensive labels for connections"""

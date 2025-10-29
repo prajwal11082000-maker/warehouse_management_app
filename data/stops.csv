@@ -1,3 +1,1 @@
 id,zone_connection_id,map_id,stop_id,name,x_coordinate,y_coordinate,left_bins_count,right_bins_count,left_bins_distance,right_bins_distance,distance_from_start,stop_type,created_at
-1,7,3,STOP_01_CENTER,Stop 1 - Center,100.0,100.0,0,0,0.0,0.0,0.0,center,2025-10-24T00:00:31.258518
-2,9,3,STOP_02_CENTER,Stop 2 - Center,100.5,100.0,0,0,0.0,0.0,0.5,center,2025-10-24T00:12:59.659929

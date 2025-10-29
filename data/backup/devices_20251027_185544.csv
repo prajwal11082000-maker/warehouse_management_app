@@ -1,0 +1,3 @@
+id,device_id,device_name,device_model,forward_speed,turning_speed,status,battery_level,current_location,wheel_diameter,distance_between_wheels,gear_ratio,length,width,height,lifting_height,max_forward_speed,max_turning_speed,distance,created_at,updated_at
+5,rob2,rob2,V1,100,100,working,100,1,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0,0,0.00,2025-10-24T00:13:36.921776,2025-10-24T00:13:36.921776
+6,rob1,rob1,V1,100,100,working,100,2,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0,0,122.00,2025-10-27T17:55:38.241020,2025-10-27T18:55:14.498749
