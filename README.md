@@ -1,13 +1,11 @@
-Warehouse Management System — Comprehensive Project Report
-1. Project Overview
-1.1 Introduction and Purpose
+# Warehouse Management System — Comprehensive Project Report
+## 1. Project Overview
+### 1.1 Introduction and Purpose
 
 The Warehouse Management System (WMS) is a desktop-first application built using Python (PyQt5) that enables management of devices (robots), maps, zones, racks, SKU locations, products, users, and tasks.
 It is designed for offline-first operation using CSV files while offering hybrid synchronization through optional REST API integration.
 
-1.2 Problem Statement
-
-Warehouse operators and administrators need an efficient and intuitive tool to:
+### 1.2 Problem Statement
 
 Maintain an inventory of devices, products, and users.
 
@@ -17,7 +15,8 @@ Create and monitor robot-executed tasks.
 
 Track robot movements and plan optimal routes — without relying on a heavy backend.
 
-1.3 Objectives
+
+### 1.3 Objectives
 
 Provide robust offline functionality via CSVs with automatic repair and migration.
 
@@ -29,17 +28,26 @@ Support path planning and command generation for robots.
 
 Allow optional API synchronization with remote servers for hybrid operation.
 
-2. Technologies, Frameworks, and Tools Used
-Category	Tools/Frameworks
+
+## 2. Technologies, Frameworks, and Tools Used
+
+### Category	Tools/Frameworks
 Language	Python
+
 UI Framework	PyQt5
+
 Data Management	pandas
+
 HTTP Client	requests
+
 Utilities	python-dateutil, Pillow, matplotlib, numpy
-Key Directories	ui/, api/, data_manager/, robot_navigation/, services/, utils/, scripts/
+
+### Key Directories	
+ui/, api/, data_manager/, robot_navigation/, services/, utils/, scripts/
 Configuration	config/settings.py, config/constants.py
-3. System Architecture / Project Structure
-3.1 Top-Level Structure
+
+## 3. System Architecture / Project Structure
+### 3.1 Top-Level Structure
 main.py
 api/
 config/
@@ -75,14 +83,15 @@ scripts/ — One-off maintenance and patch scripts.
 
 resources/ — Icons, themes, and stylesheets.
 
-4. Roles of Key Components
+## 4. Roles of Key Components
 Layer	Module	Description
 UI Layer	ui/main_window.py	Controls all pages through a sidebar and stacked widgets.
 Data Layer	CSVHandler, DeviceDataHandler, SyncManager	Ensures reliable CSV handling, logging, and synchronization.
 Robotics Layer	astar_planner.py, path_planner_service.py	Generates robot movement paths and commands.
 Automation Layer	sync_service.py	Automates device-location updates and periodic syncs.
 API Layer	api/client.py	Provides hybrid REST API integration.
-5. Configuration and Environment Setup
+
+## 5. Configuration and Environment Setup
 Steps:
 
 Install dependencies
@@ -101,12 +110,12 @@ python main.py
 Data initialization:
 The app automatically creates data directories and CSV files on first run.
 
-6. Features and Functionalities
-6.1 Dashboard
+## 6. Features and Functionalities
+### 6.1 Dashboard
 
 Central overview of system status and activity summaries.
 
-6.2 Device Management
+### 6.2 Device Management
 
 Add, edit, or delete device entries.
 
@@ -114,7 +123,7 @@ Live facing direction and current location derived from per-device logs.
 
 Reset device state and export telemetry data.
 
-6.3 Task Management
+### 6.3 Task Management
 
 Create tasks (Picking, Storing, Auditing) with validation.
 
@@ -124,7 +133,7 @@ Device handshake mechanism using <device_id>_task.csv.
 
 Generate robot paths using A* planner.
 
-6.4 Map Management
+### 6.4 Map Management
 
 Manage maps, zones, and stops.
 
@@ -132,7 +141,7 @@ Configure racks and SKU locations.
 
 Interactive visualization of warehouse zones.
 
-6.5 User and Product Management
+### 6.5 User and Product Management
 
 CRUD operations for users and products.
 
@@ -140,19 +149,19 @@ Filter by status or creation date.
 
 View aggregated product quantities from SKUs.
 
-6.6 Device Tracking
+### 6.6 Device Tracking
 
 Real-time visualization of device position and facing direction.
 
 Integrates seamlessly with logs and map viewer.
 
-6.7 Offline-First with Hybrid Option
+### 6.7 Offline-First with Hybrid Option
 
 Operates fully offline with CSVs.
 
 Automatically switches to REST API if available.
 
-6.8 Automation and Utilities
+### 6.8 Automation and Utilities
 
 sync_device_locations.py — Updates device CSVs from latest log data.
 
@@ -160,7 +169,7 @@ services/sync_service.py — Scheduled synchronization.
 
 scripts/* — Maintenance utilities for normalization or fixes.
 
-7. Database and Data Files
+## 7. Database and Data Files
 Primary Data (CSV Files in data/):
 
 devices.csv — Device registry.
@@ -197,7 +206,8 @@ backup/ — Timestamped CSV backups.
 
 logs/ — Application logs.
 
-8. Project Workflow
+## 8. Project Workflow
+
 Startup
 
 Initialize app, logger, and theme.
@@ -232,7 +242,7 @@ Periodic background job updates devices.csv from device logs.
 
 Optionally syncs with API when available.
 
-9. Testing and Validation
+## 9. Testing and Validation
 Built-in Validations
 
 Header verification and schema migration.
@@ -256,7 +266,7 @@ Implement integration tests for log synchronization.
 
 Introduce API contract tests for hybrid endpoints.
 
-10. Observability
+## 10. Observability
 
 Application logs written to logs/warehouse_app_YYYYMMDD.log.
 
@@ -264,8 +274,8 @@ Status bar shows current mode (CSV/Hybrid) and sync state.
 
 Backup mechanism ensures safe CSV recovery.
 
-11. Conclusion
-Achievements
+## 11. Conclusion
+### Achievements
 
 Complete offline-first WMS with an elegant PyQt5 interface.
 
@@ -275,11 +285,15 @@ Automatic CSV repair and backup ensuring data safety.
 
 Hybrid design allowing seamless API integration.
 
-Challenges and Solutions
+### Challenges and Solutions
 Challenge	Solution
+
 CSV header mismatch	Implemented header verification and migration logic.
+
 Reliable task-device handshake	Created per-device task CSV and polling mechanism.
+
 Synchronization consistency	Built SyncService with backup and recovery system.
+
 Future Enhancements
 
 Move to SQLite/PostgreSQL with ORM-based backend.
@@ -292,20 +306,20 @@ Package as standalone desktop executable (PyInstaller).
 
 Extend API schemas for scalability.
 
-Appendix A — Quick Start
-# Install dependencies
+## Appendix A — Quick Start
+ Install dependencies
 pip install -r requirements.txt
 
-# Run application
+ Run application
 python main.py
 
-# Optional API mode
-# Update config/settings.py with API_BASE_URL
+ Optional API mode
+ Update config/settings.py with API_BASE_URL
 
-# One-time device sync
+ One-time device sync
 python services/sync_service.py --once
 
-Appendix B — Key Modules and APIs
+## Appendix B — Key Modules and APIs
 Module	Role
 CSVHandler	Core CSV I/O, header management, backup, and validation.
 DeviceDataHandler	Handles per-device logs and status.
