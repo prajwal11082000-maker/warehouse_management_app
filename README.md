@@ -71,12 +71,18 @@ scripts/ — One-off maintenance and patch scripts.
 resources/ — Icons, themes, and stylesheets.
 
 ## 4. Roles of Key Components
-Layer	Module	Description
+### Layer	Module	Description
+
 UI Layer	ui/main_window.py	Controls all pages through a sidebar and stacked widgets.
+
 Data Layer	CSVHandler, DeviceDataHandler, SyncManager	Ensures reliable CSV handling, logging, and synchronization.
+
 Robotics Layer	astar_planner.py, path_planner_service.py	Generates robot movement paths and commands.
+
 Automation Layer	sync_service.py	Automates device-location updates and periodic syncs.
+
 API Layer	api/client.py	Provides hybrid REST API integration.
+
 
 ## 5. Configuration and Environment Setup
 Steps:
