@@ -73,15 +73,25 @@ resources/ — Icons, themes, and stylesheets.
 ## 4. Roles of Key Components
 ### Layer	Module	Description
 
-UI Layer	ui/main_window.py	Controls all pages through a sidebar and stacked widgets.
+#### UI Layer	
 
-Data Layer	CSVHandler, DeviceDataHandler, SyncManager	Ensures reliable CSV handling, logging, and synchronization.
+ui/main_window.py	Controls all pages through a sidebar and stacked widgets.
 
-Robotics Layer	astar_planner.py, path_planner_service.py	Generates robot movement paths and commands.
+#### Data Layer	
 
-Automation Layer	sync_service.py	Automates device-location updates and periodic syncs.
+CSVHandler, DeviceDataHandler, SyncManager:	Ensures reliable CSV handling, logging, and synchronization.
 
-API Layer	api/client.py	Provides hybrid REST API integration.
+#### Robotics Layer	
+
+astar_planner.py, path_planner_service.py:	Generates robot movement paths and commands.
+
+#### Automation Layer	
+
+sync_service.py:	Automates device-location updates and periodic syncs.
+
+#### API Layer	
+
+api/client.py:	Provides hybrid REST API integration.
 
 
 ## 5. Configuration and Environment Setup
@@ -259,7 +269,6 @@ Status bar shows current mode (CSV/Hybrid) and sync state.
 Backup mechanism ensures safe CSV recovery.
 
 ## 11. Conclusion
-### Achievements
 
 Complete offline-first WMS with an elegant PyQt5 interface.
 
@@ -268,8 +277,6 @@ Fully functional device tracking, path planning, and task monitoring.
 Automatic CSV repair and backup ensuring data safety.
 
 Hybrid design allowing seamless API integration.
-
-### Challenges and Solutions
 
 CSV header mismatch	Implemented header verification and migration logic.
 
