@@ -48,17 +48,6 @@ Configuration	config/settings.py, config/constants.py
 
 ## 3. System Architecture / Project Structure
 ### 3.1 Top-Level Structure
-main.py
-api/
-config/
-data/
-data_manager/
-robot_navigation/
-services/
-ui/
-utils/
-scripts/
-resources/
 
 
 main.py — Application entry point. Initializes UI, logger, theme, timers, and CSV structure.
