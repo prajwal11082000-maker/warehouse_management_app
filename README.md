@@ -328,5 +328,5 @@ MainWindow, Sidebar	Core UI controllers.
 path_planner_service, astar_planner	Route computation and command generation.
 DevicesAPI, TasksAPI, UsersAPI, MapsAPI	REST API clients (optional).
 
-✅ Final Summary:
+Final Summary:
 The Warehouse Management System (WMS) project successfully delivers a complete, modular, and offline-capable warehouse management solution using Python and PyQt5, bridging robotics operations, data synchronization, and intuitive visualization — with a clear path toward hybrid and scalable future integration.
