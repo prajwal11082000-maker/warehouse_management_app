@@ -42,9 +42,7 @@ HTTP Client	requests
 
 Utilities	python-dateutil, Pillow, matplotlib, numpy
 
-### Key Directories	
-ui/, api/, data_manager/, robot_navigation/, services/, utils/, scripts/
-Configuration	config/settings.py, config/constants.py
+
 
 ## 3. System Architecture / Project Structure
 ### 3.1 Top-Level Structure
