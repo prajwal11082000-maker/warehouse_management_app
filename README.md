@@ -170,7 +170,7 @@ services/sync_service.py — Scheduled synchronization.
 scripts/* — Maintenance utilities for normalization or fixes.
 
 ## 7. Database and Data Files
-Primary Data (CSV Files in data/):
+### Primary Data (CSV Files in data/):
 
 devices.csv — Device registry.
 
@@ -190,7 +190,7 @@ sku_location.csv — SKU slot data.
 
 products.csv — Product registry.
 
-Per-Device Logs (data/device_logs/):
+### Per-Device Logs (data/device_logs/):
 
 <device_id>.csv — Live telemetry.
 
@@ -198,7 +198,7 @@ Per-Device Logs (data/device_logs/):
 
 path_{device_id}.csv — Command sequence for robot.
 
-Other Files
+### Other Files
 
 zone_navigation.json — Cached navigation state.
 
@@ -208,7 +208,7 @@ logs/ — Application logs.
 
 ## 8. Project Workflow
 
-Startup
+### Startup
 
 Initialize app, logger, and theme.
 
@@ -216,13 +216,13 @@ Validate and create all CSV headers via CSVHandler.
 
 Load MainWindow with sidebar and pages.
 
-UI Navigation
+### UI Navigation
 
 Sidebar triggers stacked widget page changes.
 
 Each page loads and refreshes its respective data.
 
-Device-Task Interaction
+### Device-Task Interaction
 
 Task creation writes to tasks.csv.
 
@@ -230,13 +230,13 @@ Task creation writes to tasks.csv.
 
 Robot executes and updates task state via logs.
 
-Path Planning
+### Path Planning
 
 path_planner_service computes optimal route using A*.
 
 Saves executable path as CSV commands.
 
-Synchronization
+### Synchronization
 
 Periodic background job updates devices.csv from device logs.
 
@@ -250,15 +250,6 @@ Header verification and schema migration.
 ID assignment and timestamping.
 
 Automatic backup before every write.
-
-Manual Test Scenarios
-Feature	Validation
-Device	Add/update/delete and verify in table.
-Task	Create, start, and complete; verify lifecycle in CSV.
-Maps	Add zones/stops and check visualization.
-Path	Generate and verify path_{device}.csv.
-Sync	Run sync_service.py and verify devices.csv update.
-Recommendations
 
 Add unit tests for data handlers and path planner.
 
@@ -286,7 +277,6 @@ Automatic CSV repair and backup ensuring data safety.
 Hybrid design allowing seamless API integration.
 
 ### Challenges and Solutions
-Challenge	Solution
 
 CSV header mismatch	Implemented header verification and migration logic.
 
@@ -294,7 +284,7 @@ Reliable task-device handshake	Created per-device task CSV and polling mechanism
 
 Synchronization consistency	Built SyncService with backup and recovery system.
 
-Future Enhancements
+### Future Enhancements
 
 Move to SQLite/PostgreSQL with ORM-based backend.
 
@@ -305,28 +295,3 @@ Expand unit and integration tests.
 Package as standalone desktop executable (PyInstaller).
 
 Extend API schemas for scalability.
-
-## Appendix A — Quick Start
- Install dependencies
-pip install -r requirements.txt
-
- Run application
-python main.py
-
- Optional API mode
- Update config/settings.py with API_BASE_URL
-
- One-time device sync
-python services/sync_service.py --once
-
-## Appendix B — Key Modules and APIs
-Module	Role
-CSVHandler	Core CSV I/O, header management, backup, and validation.
-DeviceDataHandler	Handles per-device logs and status.
-SyncManager	Manages API <-> CSV synchronization.
-MainWindow, Sidebar	Core UI controllers.
-path_planner_service, astar_planner	Route computation and command generation.
-DevicesAPI, TasksAPI, UsersAPI, MapsAPI	REST API clients (optional).
-
-Final Summary:
-The Warehouse Management System (WMS) project successfully delivers a complete, modular, and offline-capable warehouse management solution using Python and PyQt5, bridging robotics operations, data synchronization, and intuitive visualization — with a clear path toward hybrid and scalable future integration.
