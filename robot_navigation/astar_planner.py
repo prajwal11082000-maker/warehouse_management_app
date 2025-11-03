@@ -334,6 +334,12 @@ def generate_path_commands(
                 )
                 cmds.extend(seg_cmds)
                 last_arrival_zone = sub_edge.to_zone
+                try:
+                    is_last_overall_leg = (i == len(zone_sequence) - 1) and (j == len(sub_pairs) - 1)
+                    if not is_last_overall_leg:
+                        cmds.append(('ALIGN', str(sub_edge.to_zone), '0', '0'))
+                except Exception:
+                    pass
             offset_m_for_first_edge = 0.0
         else:
             stops = stops_by_conn.get(edge.connection_id or -1, [])
@@ -343,6 +349,11 @@ def generate_path_commands(
             cmds.extend(seg_cmds)
             offset_m_for_first_edge = 0.0
             last_arrival_zone = edge.to_zone
+            try:
+                if i < len(zone_sequence) - 1:
+                    cmds.append(('ALIGN', str(edge.to_zone), '0', '0'))
+            except Exception:
+                pass
 
     # Append final ALIGN at the last arrival zone, if available
     if last_arrival_zone is not None:
