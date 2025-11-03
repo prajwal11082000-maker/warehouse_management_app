@@ -837,8 +837,23 @@ class TaskMonitorWidget(QWidget):
                 if not base_from or not hub:
                     QMessageBox.critical(self, "Missing Zones", "Task is missing from/to zones.")
                     return
+                current_zone = None
+                try:
+                    nav = get_zone_navigation_manager()
+                    nav_info2 = nav.get_navigation_info(device_id)
+                    current_zone = nav_info2.get('current_zone')
+                except Exception:
+                    current_zone = None
+                if not current_zone:
+                    current_zone = self._derive_start_zone_for_audit(device_id, map_id)
 
-                zone_sequence = self._build_zone_sequence_for_map(map_id, base_from, hub)
+                zone_sequence = []
+                if current_zone and str(current_zone) != str(base_from):
+                    zone_sequence.append((str(current_zone), str(base_from)))
+                zone_sequence.append((str(base_from), str(hub)))
+                zone_sequence.append((str(hub), str(base_from)))
+                if current_zone and str(current_zone) != str(base_from):
+                    zone_sequence.append((str(base_from), str(current_zone)))
             if not zone_sequence:
                 QMessageBox.critical(self, "No Route", "Could not determine zone sequence for this task/map.")
                 return
