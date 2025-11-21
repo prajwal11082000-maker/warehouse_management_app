@@ -367,6 +367,21 @@ def generate_path_commands(
             cmds.append((turn_cmd, deg, 'DEG'))
     except Exception:
         pass
+    cleaned_cmds: List[Tuple[Any, ...]] = []
+    prev_c = None
+    for c in cmds:
+        try:
+            if (
+                isinstance(c, (tuple, list)) and isinstance(prev_c, (tuple, list))
+                and len(c) > 0 and len(prev_c) > 0
+                and str(c[0]).upper() == 'ALIGN' and c == prev_c
+            ):
+                continue
+        except Exception:
+            pass
+        cleaned_cmds.append(c)
+        prev_c = c
+    cmds = cleaned_cmds
     # Augment commands with speeds where requested
     aug_cmds: List[Tuple[Any, ...]] = []
     for c in cmds:
