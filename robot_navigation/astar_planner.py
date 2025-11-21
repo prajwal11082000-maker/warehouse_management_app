@@ -361,6 +361,12 @@ def generate_path_commands(
             cmds.append(('ALIGN', str(last_arrival_zone), '0', '0'))
         except Exception:
             pass
+    try:
+        turn_cmd, deg = compute_turn(cur_dir, initial_direction)
+        if turn_cmd and deg:
+            cmds.append((turn_cmd, deg, 'DEG'))
+    except Exception:
+        pass
     # Augment commands with speeds where requested
     aug_cmds: List[Tuple[Any, ...]] = []
     for c in cmds:
