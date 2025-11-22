@@ -334,6 +334,12 @@ def generate_path_commands(
                 )
                 cmds.extend(seg_cmds)
                 last_arrival_zone = sub_edge.to_zone
+                try:
+                    is_last_overall_leg = (i == len(zone_sequence) - 1) and (j == len(sub_pairs) - 1)
+                    if not is_last_overall_leg:
+                        cmds.append(('ALIGN', str(sub_edge.to_zone), '0', '0'))
+                except Exception:
+                    pass
             offset_m_for_first_edge = 0.0
         else:
             stops = stops_by_conn.get(edge.connection_id or -1, [])
@@ -343,6 +349,11 @@ def generate_path_commands(
             cmds.extend(seg_cmds)
             offset_m_for_first_edge = 0.0
             last_arrival_zone = edge.to_zone
+            try:
+                if i < len(zone_sequence) - 1:
+                    cmds.append(('ALIGN', str(edge.to_zone), '0', '0'))
+            except Exception:
+                pass
 
     # Append final ALIGN at the last arrival zone, if available
     if last_arrival_zone is not None:
@@ -350,6 +361,27 @@ def generate_path_commands(
             cmds.append(('ALIGN', str(last_arrival_zone), '0', '0'))
         except Exception:
             pass
+    try:
+        turn_cmd, deg = compute_turn(cur_dir, initial_direction)
+        if turn_cmd and deg:
+            cmds.append((turn_cmd, deg, 'DEG'))
+    except Exception:
+        pass
+    cleaned_cmds: List[Tuple[Any, ...]] = []
+    prev_c = None
+    for c in cmds:
+        try:
+            if (
+                isinstance(c, (tuple, list)) and isinstance(prev_c, (tuple, list))
+                and len(c) > 0 and len(prev_c) > 0
+                and str(c[0]).upper() == 'ALIGN' and c == prev_c
+            ):
+                continue
+        except Exception:
+            pass
+        cleaned_cmds.append(c)
+        prev_c = c
+    cmds = cleaned_cmds
     # Augment commands with speeds where requested
     aug_cmds: List[Tuple[Any, ...]] = []
     for c in cmds:
