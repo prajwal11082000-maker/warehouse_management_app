@@ -112,7 +112,7 @@ class TaskMonitorWidget(QWidget):
 
         # Tasks table
         self.tasks_table = DataTableWidget([
-            "Task ID", "Task Name", "Type", "Status", "Assigned Device",
+            "Task ID", "Task Name", "Type", "Status", "Assigned Device(s)",
             "Assigned User", "Progress", "Created", "Duration"
         ], searchable=True, selectable=True)
 
@@ -322,14 +322,23 @@ class TaskMonitorWidget(QWidget):
         self.tasks_table.clear_data()
 
         for task in tasks:
-            # Get assigned device info
+            # Get assigned device info (supports multiple)
             device_text = "Unassigned"
-            if task.get('assigned_device_id'):
-                # Look up device name from CSV
-                devices = self.csv_handler.read_csv('devices')
-                device = next((d for d in devices if str(d.get('id')) == str(task.get('assigned_device_id'))), None)
-                if device:
-                    device_text = f"{device.get('device_name', '')} ({device.get('device_id', '')})"
+            devices = self.csv_handler.read_csv('devices')
+            multi_ids = [s.strip() for s in str(task.get('assigned_device_ids') or '').split(',') if s.strip()]
+            if multi_ids:
+                names = []
+                for did in multi_ids:
+                    dev = next((d for d in devices if str(d.get('id')) == str(did) or str(d.get('device_id')) == str(did)), None)
+                    if dev:
+                        names.append(f"{dev.get('device_name', '')} ({dev.get('device_id', '')})")
+                    else:
+                        names.append(str(did))
+                device_text = ", ".join(names)
+            elif task.get('assigned_device_id'):
+                dev = next((d for d in devices if str(d.get('id')) == str(task.get('assigned_device_id')) or str(d.get('device_id')) == str(task.get('assigned_device_id'))), None)
+                if dev:
+                    device_text = f"{dev.get('device_name', '')} ({dev.get('device_id', '')})"
                 else:
                     device_text = f"Device ID: {task.get('assigned_device_id')}"
 
@@ -438,21 +447,28 @@ class TaskMonitorWidget(QWidget):
             self.generate_path_btn.setEnabled(status in ['pending', 'running'])
             
     def check_device_availability(self, device_id):
-        """Check if a device is available (not running another task)"""
+        """Check if a device is available (not running another task)."""
         if not device_id:
             return True
         tasks = self.csv_handler.read_csv('tasks')
-        device_tasks = [t for t in tasks if (
-            t.get('assigned_device_id') == str(device_id) and
-            t.get('status', '').lower() == 'running'
-        )]
-        return len(device_tasks) == 0
+        for t in tasks:
+            if str(t.get('status', '')).lower() != 'running':
+                continue
+            if str(t.get('assigned_device_id') or '') == str(device_id):
+                return False
+            mids = [s.strip() for s in str(t.get('assigned_device_ids') or '').split(',') if s.strip()]
+            if str(device_id) in mids:
+                return False
+        return True
 
     def start_selected_task(self):
         """Start selected task with device handshake and popup flow."""
         if not self.selected_task:
             return
-        device_ref = self.selected_task.get('assigned_device_id')
+        device_ref = self.selected_task.get('assigned_device_id') or (
+            [s for s in str(self.selected_task.get('assigned_device_ids') or '').split(',') if s.strip()][0]
+            if str(self.selected_task.get('assigned_device_ids') or '').strip() else None
+        )
         if not device_ref:
             QMessageBox.warning(self, "No Device", "Assign a device to this task before starting.")
             return
@@ -782,30 +798,67 @@ class TaskMonitorWidget(QWidget):
         - Finally (hub -> base_from) if exists.
         """
         zones = self.csv_handler.read_csv('zones')
-        stops = self.csv_handler.read_csv('stops')
         zones = [z for z in zones if str(z.get('map_id')) == str(map_id)]
-        stop_conn_ids = {str(s.get('zone_connection_id')) for s in stops if str(s.get('map_id')) == str(map_id)}
-        
-        def has_edge(fz, tz):
-            return any(str(z.get('from_zone')) == str(fz) and str(z.get('to_zone')) == str(tz) for z in zones)
+        if not zones:
+            return []
+        stop_ids = set()
+        stops = self.csv_handler.read_csv('stops')
+        stop_ids = {str(s.get('zone_connection_id')) for s in stops if str(s.get('map_id')) == str(map_id)}
 
-        seq = []
-        if base_from and hub and has_edge(base_from, hub):
-            seq.append((str(base_from), str(hub)))
-
+        edges = []  # (id_int, from, to)
         for z in zones:
             cid = str(z.get('id'))
-            if cid not in stop_conn_ids:
+            if cid not in stop_ids:
                 continue
-            if str(z.get('from_zone')) == str(hub):
-                fz, tz = str(z.get('from_zone')), str(z.get('to_zone'))
-                seq.append((fz, tz))
-                if has_edge(tz, fz):
-                    seq.append((tz, fz))
+            try:
+                id_int = int(z.get('id')) if z.get('id') is not None else 0
+            except Exception:
+                id_int = 0
+            edges.append((id_int, str(z.get('from_zone')), str(z.get('to_zone'))))
+        edges.sort(key=lambda e: e[0])
+        
+        if not base_from:
+            zone_ids = set()
+            for z in zones:
+                zone_ids.add(str(z.get('from_zone')))
+                zone_ids.add(str(z.get('to_zone')))
+            zone_ids = {z for z in zone_ids if z}
+            
+            def zone_key(z):
+                s = str(z)
+                return (0, int(s)) if s.isdigit() else (1, s)
+                
+            base_from = sorted(zone_ids, key=zone_key)[0] if zone_ids else None
+            
+        current = base_from or (edges[0][1] if edges else None)
+        if not current:
+            return []
 
-        if base_from and hub and has_edge(hub, base_from):
-            if not seq or seq[-1] != (str(hub), str(base_from)):
-                seq.append((str(hub), str(base_from)))
+        seq = []
+        visited = set()
+        for _ in range(len(edges)):
+            # Try to find next edge starting from current
+            pick = -1
+            for i in range(len(edges)):
+                if i in visited:
+                    continue
+                if edges[i][1] == current:
+                    pick = i
+                    break
+            if pick < 0:
+                # take the next unvisited
+                for i in range(len(edges)):
+                    if i not in visited:
+                        pick = i
+                        break
+            if pick < 0:
+                break
+            fz, tz = edges[pick][1], edges[pick][2]
+            if current != fz:
+                seq.append((str(current), str(fz)))
+            seq.append((str(fz), str(tz)))
+            visited.add(pick)
+            current = tz
 
         return seq
         
@@ -815,7 +868,10 @@ class TaskMonitorWidget(QWidget):
             if not self.selected_task:
                 return
 
-            device_pk = self.selected_task.get('assigned_device_id')
+            device_pk = self.selected_task.get('assigned_device_id') or (
+                [s for s in str(self.selected_task.get('assigned_device_ids') or '').split(',') if s.strip()][0]
+                if str(self.selected_task.get('assigned_device_ids') or '').strip() else None
+            )
             if not device_pk:
                 QMessageBox.warning(self, "No Device", "Assign a device to this task before generating the path.")
                 return

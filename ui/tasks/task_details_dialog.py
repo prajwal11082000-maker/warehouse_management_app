@@ -73,6 +73,21 @@ class TaskDetailsDialog(QDialog):
         """Update live tracking information"""
         device_id = self.task_data.get('assigned_device_id')
         if not device_id:
+            # Fallback to first from multi-assign list
+            ids_str = str(self.task_data.get('assigned_device_ids') or '').strip()
+            if ids_str:
+                parts = [s for s in ids_str.split(',') if s.strip()]
+                device_id = parts[0] if parts else None
+        # Resolve numeric devices.id to devices.device_id string for log lookup
+        try:
+            if device_id and str(device_id).isdigit():
+                devices = self.csv_handler.read_csv('devices') if self.csv_handler else []
+                dev_row = next((d for d in devices if str(d.get('id')) == str(device_id)), None)
+                if dev_row and dev_row.get('device_id'):
+                    device_id = dev_row.get('device_id')
+        except Exception:
+            pass
+        if not device_id:
             self.device_location_label.setText("No device assigned")
             self.device_distance_label.setText("N/A")
             self.device_direction_label.setText("N/A")
@@ -469,8 +484,8 @@ class TaskDetailsDialog(QDialog):
 
         grid_layout = QGridLayout()
 
-        # Assigned Device
-        grid_layout.addWidget(QLabel("Assigned Device:"), 0, 0)
+        # Assigned Device(s)
+        grid_layout.addWidget(QLabel("Assigned Device(s):"), 0, 0)
         self.assigned_device_label = QLabel()
         self.assigned_device_label.setStyleSheet("color: #cccccc;")
         self.assigned_device_label.setWordWrap(True)
@@ -699,20 +714,36 @@ class TaskDetailsDialog(QDialog):
 
        # Check if assignment labels exist
        if all([self.assigned_device_label, self.assigned_user_label, self.created_by_label]):
-           # Assignment
-           device_id = self.task_data.get('assigned_device_id', 'Unassigned')
-           if device_id and device_id != 'Unassigned':
-               try:
-                   devices = self.csv_handler.read_csv('devices')
-                   device = next((d for d in devices if str(d.get('device_id')) == str(device_id)), None)
-                   if device:
-                       device_text = f"{device.get('device_name', '')} ({device.get('device_id', '')})"
+           # Assignment - devices (support multiple)
+           devices = []
+           try:
+               devices = self.csv_handler.read_csv('devices')
+           except Exception:
+               devices = []
+           device_text = 'Unassigned'
+           multi_ids = [s.strip() for s in str(self.task_data.get('assigned_device_ids') or '').split(',') if s.strip()]
+           if multi_ids:
+               names = []
+               for did in multi_ids:
+                   d = next((x for x in devices if str(x.get('id')) == str(did) or str(x.get('device_id')) == str(did)), None)
+                   if d:
+                       names.append(f"{d.get('device_name','')} ({d.get('device_id','')})")
                    else:
-                       device_text = f"Device ID: {device_id}"
-               except Exception:
-                   device_text = str(device_id)
+                       names.append(str(did))
+               device_text = ", ".join(names)
            else:
-               device_text = 'Unassigned'
+               device_id = self.task_data.get('assigned_device_id', 'Unassigned')
+               if device_id and device_id != 'Unassigned':
+                   try:
+                       d = next((x for x in devices if str(x.get('id')) == str(device_id) or str(x.get('device_id')) == str(device_id)), None)
+                       if d:
+                           device_text = f"{d.get('device_name', '')} ({d.get('device_id', '')})"
+                       else:
+                           device_text = f"Device: {device_id}"
+                   except Exception:
+                       device_text = str(device_id)
+               else:
+                   device_text = 'Unassigned'
            self.assigned_device_label.setText(device_text)
 
            user_id = self.task_data.get('assigned_user_id', 'Unassigned')

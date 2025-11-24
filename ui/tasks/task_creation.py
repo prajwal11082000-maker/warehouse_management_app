@@ -466,16 +466,37 @@ class TaskCreationWidget(QWidget):
         assignment_layout.setSpacing(15)
         assignment_layout.setVerticalSpacing(15)
 
-        # Device Assignment
+        # Device Assignment (Multi-select)
         self.device_combo = QComboBox()
         self.device_combo.setMinimumHeight(35)
-        self.device_combo.addItem("Select Device", "")  # Changed text to indicate selection is required
+        self.device_combo.addItem("Auto-assign Available Device", "")  # kept for backward compatibility (hidden)
         self.device_combo.currentTextChanged.connect(self.on_device_changed)
         self.apply_combo_style(self.device_combo)
-        assignment_layout.addRow("Assign Device *:", self.device_combo)  # Added asterisk to indicate required
+        # Multi-select device list
+        self.device_list = QListWidget()
+        self.device_list.setSelectionMode(QListWidget.MultiSelection)
+        self.device_list.setMinimumHeight(140)
+        self.device_list.setStyleSheet("""
+            QListWidget {
+                background-color: #404040;
+                border: 1px solid #555555;
+                padding: 6px;
+                border-radius: 4px;
+                color: #ffffff;
+                font-size: 13px;
+            }
+            QListWidget::item { padding: 4px; }
+            QListWidget::item:selected { background-color: #ff6b35; color: white; }
+        """)
+        try:
+            self.device_list.itemSelectionChanged.disconnect()
+        except Exception:
+            pass
+        self.device_list.itemSelectionChanged.connect(self.on_device_selection_changed)
+        assignment_layout.addRow("Assign Devices *:", self.device_list)
 
         # Device Status Label
-        self.device_status_label = QLabel("Auto-assignment enabled")
+        self.device_status_label = QLabel("Select one or more devices")
         self.device_status_label.setStyleSheet("""
             QLabel {
                 color: #cccccc;
@@ -648,6 +669,9 @@ class TaskCreationWidget(QWidget):
 
             self.device_combo.clear()
             self.device_combo.addItem("Auto-assign Available Device", "")
+            # Populate multi-select list
+            if hasattr(self, 'device_list') and self.device_list is not None:
+                self.device_list.clear()
 
             for device in devices:
                 status = device.get('status', '').lower()
@@ -658,13 +682,27 @@ class TaskCreationWidget(QWidget):
                 if status == 'working':
                     if battery:
                         device_text += f" - {battery}% ⚡"
+                    # Single-select (legacy hidden)
                     self.device_combo.addItem(f"✅ {device_text}", device.get('id'))
+                    # Multi-select entry
+                    if hasattr(self, 'device_list') and self.device_list is not None:
+                        item = QListWidgetItem(f"✅ {device_text}")
+                        item.setData(Qt.UserRole, device.get('id'))
+                        self.device_list.addItem(item)
                 elif status == 'charging':
                     device_text += " - Charging 🔋"
                     self.device_combo.addItem(f"🔋 {device_text}", device.get('id'))
+                    if hasattr(self, 'device_list') and self.device_list is not None:
+                        item = QListWidgetItem(f"🔋 {device_text}")
+                        item.setData(Qt.UserRole, device.get('id'))
+                        self.device_list.addItem(item)
                 else:
                     device_text += f" - {status.title()}"
                     self.device_combo.addItem(f"❌ {device_text}", device.get('id'))
+                    if hasattr(self, 'device_list') and self.device_list is not None:
+                        item = QListWidgetItem(f"❌ {device_text}")
+                        item.setData(Qt.UserRole, device.get('id'))
+                        self.device_list.addItem(item)
 
         except Exception as e:
             self.logger.error(f"Error loading devices: {e}")
@@ -753,11 +791,46 @@ class TaskCreationWidget(QWidget):
         else:
             self.device_status_label.setText("Please select a device")
 
+    def on_device_selection_changed(self):
+        """Handle multi-device selection change (update status summary)."""
+        try:
+            selected = self.get_selected_device_ids()
+            if not selected:
+                self.device_status_label.setText("Please select one or more devices")
+                return
+            # Summarize selected devices
+            devices = self.csv_handler.read_csv('devices')
+            names = []
+            for did in selected:
+                d = next((x for x in devices if str(x.get('id')) == str(did)), None)
+                if d:
+                    names.append(f"{d.get('device_name','')} ({d.get('device_id','')})")
+                else:
+                    names.append(str(did))
+            if len(names) <= 3:
+                text = "\n".join([f"• {n}" for n in names])
+            else:
+                head = "\n".join([f"• {n}" for n in names[:3]])
+                text = f"{head}\n+{len(names)-3} more..."
+            self.device_status_label.setText(text)
+        except Exception:
+            pass
+
+    def get_selected_device_ids(self):
+        """Return list of selected device 'id' values from the multi-select list."""
+        if hasattr(self, 'device_list') and self.device_list is not None:
+            return [self.device_list.item(i).data(Qt.UserRole)
+                    for i in range(self.device_list.count())
+                    if self.device_list.item(i).isSelected() and self.device_list.item(i).data(Qt.UserRole)]
+        return []
+
     def clear_form(self):
         """Clear all form fields"""
         self.task_name_input.clear()
         self.task_type_combo.setCurrentIndex(0)
         self.device_combo.setCurrentIndex(0)
+        if hasattr(self, 'device_list') and self.device_list is not None:
+            self.device_list.clearSelection()
         self.user_combo.setCurrentIndex(0)
 
 
@@ -800,21 +873,23 @@ class TaskCreationWidget(QWidget):
             self.task_type_combo.setFocus()
             return False
 
-        if not self.device_combo.currentData():
-            QMessageBox.warning(self, "Validation Error", "Device assignment is required")
-            self.device_combo.setFocus()
+        # Require at least one device selection
+        selected_devices = self.get_selected_device_ids()
+        if not selected_devices:
+            QMessageBox.warning(self, "Validation Error", "At least one device must be selected")
+            if hasattr(self, 'device_list') and self.device_list is not None:
+                self.device_list.setFocus()
             return False
-            
-        # Check if selected device is available
-        device_id = self.device_combo.currentData()
-        if not self.check_device_availability(device_id):
+        # Check all selected devices are available
+        if not self.check_devices_availability(selected_devices):
             QMessageBox.warning(
                 self,
                 "Device Busy",
-                "The selected device is currently running another task. "
-                "Please wait for the device to complete its current task or select a different device."
+                "One or more selected devices are currently running another task. "
+                "Please adjust your selection."
             )
-            self.device_combo.setFocus()
+            if hasattr(self, 'device_list') and self.device_list is not None:
+                self.device_list.setFocus()
             return False
 
         # Task type specific validations
@@ -868,7 +943,10 @@ class TaskCreationWidget(QWidget):
             'task_name': self.task_name_input.text().strip(),
             'task_type': self.task_type_combo.currentData(),
             'status': 'pending',
-            'assigned_device_id': self.device_combo.currentData() or '',
+            # Backward-compat single device id = first selected
+            'assigned_device_id': (self.get_selected_device_ids()[0] if self.get_selected_device_ids() else ''),
+            # New multi-device field (comma-separated device ids)
+            'assigned_device_ids': ','.join(str(x) for x in self.get_selected_device_ids()) if self.get_selected_device_ids() else '',
             'assigned_user_id': self.user_combo.currentData() or '',
             'description': self.description_input.text().strip() if hasattr(self, 'description_input') else '',
             'estimated_duration': '',  # We can calculate this based on zones/path later
@@ -1028,11 +1106,16 @@ class TaskCreationWidget(QWidget):
             if self.api_client.is_authenticated():
                 response = self.tasks_api.create_task(task_data)
                 if 'error' not in response:
-                    # Update per-device task CSV on success
+                    # Update per-device task CSV on success (for all assigned devices)
                     try:
-                        self.device_data_handler.update_device_task_pending_by_task(
-                            task_data.get('assigned_device_id'), task_data.get('task_id')
-                        )
+                        ids_str = task_data.get('assigned_device_ids') or ''
+                        ids = [s for s in str(ids_str).split(',') if str(s).strip()]
+                        if not ids:
+                            # fallback to single field
+                            single = task_data.get('assigned_device_id')
+                            ids = [single] if single else []
+                        for dev in ids:
+                            self.device_data_handler.update_device_task_pending_by_task(dev, task_data.get('task_id'))
                     except Exception as e:
                         self.logger.warning(f"Could not update device task CSV after API create: {e}")
                     return True
@@ -1044,11 +1127,15 @@ class TaskCreationWidget(QWidget):
                 task_data['id'] = self.csv_handler.get_next_id('tasks')
 
             if self.csv_handler.append_to_csv('tasks', task_data):
-                # Update per-device task CSV on CSV fallback success
+                # Update per-device task CSV on CSV fallback success (for all assigned devices)
                 try:
-                    self.device_data_handler.update_device_task_pending_by_task(
-                        task_data.get('assigned_device_id'), task_data.get('task_id')
-                    )
+                    ids_str = task_data.get('assigned_device_ids') or ''
+                    ids = [s for s in str(ids_str).split(',') if str(s).strip()]
+                    if not ids:
+                        single = task_data.get('assigned_device_id')
+                        ids = [single] if single else []
+                    for dev in ids:
+                        self.device_data_handler.update_device_task_pending_by_task(dev, task_data.get('task_id'))
                 except Exception as e:
                     self.logger.warning(f"Could not update device task CSV after local save: {e}")
                 self.logger.info(f"Successfully created task: {task_data.get('task_id', task_data.get('id'))}")
@@ -1088,6 +1175,28 @@ class TaskCreationWidget(QWidget):
             self.pickup_map_combo.currentIndexChanged.connect(self.on_map_selection_changed)
         except Exception as e:
             self.logger.error(f"Error loading maps: {e}")
+
+    def check_devices_availability(self, device_ids):
+        """Return True if none of the given device ids are running another task.
+        Considers both single 'assigned_device_id' and multi 'assigned_device_ids' fields.
+        """
+        if not device_ids:
+            return True
+        tasks = self.csv_handler.read_csv('tasks')
+        busy = set()
+        dev_set = {str(d) for d in device_ids}
+        for t in tasks:
+            if str(t.get('status','')).lower() != 'running':
+                continue
+            sid = str(t.get('assigned_device_id') or '').strip()
+            if sid and sid in dev_set:
+                busy.add(sid)
+                continue
+            mids = [s.strip() for s in str(t.get('assigned_device_ids') or '').split(',') if s.strip()]
+            for m in mids:
+                if m in dev_set:
+                    busy.add(m)
+        return len(busy) == 0
 
     def on_map_selection_changed(self, index):
         """Handle map selection change and populate zones"""
