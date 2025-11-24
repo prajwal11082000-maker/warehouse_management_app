@@ -868,67 +868,74 @@ class TaskMonitorWidget(QWidget):
             if not self.selected_task:
                 return
 
-            device_pk = self.selected_task.get('assigned_device_id') or (
-                [s for s in str(self.selected_task.get('assigned_device_ids') or '').split(',') if s.strip()][0]
-                if str(self.selected_task.get('assigned_device_ids') or '').strip() else None
-            )
-            if not device_pk:
+            ids_str = str(self.selected_task.get('assigned_device_ids') or '').strip()
+            if ids_str:
+                pk_list = [s for s in ids_str.split(',') if s.strip()]
+            else:
+                single = self.selected_task.get('assigned_device_id')
+                pk_list = [str(single)] if single else []
+            if not pk_list:
                 QMessageBox.warning(self, "No Device", "Assign a device to this task before generating the path.")
                 return
-            devices = self.csv_handler.read_csv('devices')
-            dev_row = next((d for d in devices if str(d.get('id')) == str(device_pk)), None)
-            device_id = (dev_row.get('device_id') if dev_row else None) or str(device_pk)
 
+            devices = self.csv_handler.read_csv('devices')
             map_id, from_zone, to_zone, zone_path = self._parse_task_map_and_path(self.selected_task)
             if not map_id:
                 QMessageBox.critical(self, "Missing Map", "Task is missing map_id in details.")
                 return
             task_type = str(self.selected_task.get('task_type') or '').lower()
-            if task_type in ('auditing','audit','auduting'):
-                start_zone = self._derive_start_zone_for_audit(device_id, map_id)
-                zone_sequence = self._build_full_map_sequence(map_id, start_zone)
-            else:
-                base_from = from_zone or (zone_path[0] if zone_path else None)
-                hub = to_zone or (zone_path[1] if len(zone_path) > 1 else None)
-                if not base_from or not hub:
-                    QMessageBox.critical(self, "Missing Zones", "Task is missing from/to zones.")
+
+            results = []
+            for pk in pk_list:
+                dev_row = next((d for d in devices if str(d.get('id')) == str(pk) or str(d.get('device_id')) == str(pk)), None)
+                device_id = (dev_row.get('device_id') if dev_row else None) or str(pk)
+
+                if task_type in ('auditing','audit','auduting'):
+                    start_zone = self._derive_start_zone_for_audit(device_id, map_id)
+                    zone_sequence = self._build_full_map_sequence(map_id, start_zone)
+                else:
+                    base_from = from_zone or (zone_path[0] if zone_path else None)
+                    hub = to_zone or (zone_path[1] if len(zone_path) > 1 else None)
+                    if not base_from or not hub:
+                        QMessageBox.critical(self, "Missing Zones", "Task is missing from/to zones.")
+                        return
+                    current_zone = None
+                    try:
+                        nav = get_zone_navigation_manager()
+                        nav_info2 = nav.get_navigation_info(device_id)
+                        current_zone = nav_info2.get('current_zone')
+                    except Exception:
+                        current_zone = None
+                    if not current_zone:
+                        current_zone = self._derive_start_zone_for_audit(device_id, map_id)
+
+                    zone_sequence = []
+                    if current_zone and str(current_zone) != str(base_from):
+                        zone_sequence.append((str(current_zone), str(base_from)))
+                    zone_sequence.append((str(base_from), str(hub)))
+                    zone_sequence.append((str(hub), str(base_from)))
+                    if current_zone and str(current_zone) != str(base_from):
+                        zone_sequence.append((str(base_from), str(current_zone)))
+                if not zone_sequence:
+                    QMessageBox.critical(self, "No Route", "Could not determine zone sequence for this task/map.")
                     return
-                current_zone = None
+
                 try:
                     nav = get_zone_navigation_manager()
-                    nav_info2 = nav.get_navigation_info(device_id)
-                    current_zone = nav_info2.get('current_zone')
+                    nav_info = nav.get_navigation_info(device_id)
+                    initial_direction = (nav_info.get('locked_direction') or 'north')
                 except Exception:
-                    current_zone = None
-                if not current_zone:
-                    current_zone = self._derive_start_zone_for_audit(device_id, map_id)
+                    initial_direction = 'north'
 
-                zone_sequence = []
-                if current_zone and str(current_zone) != str(base_from):
-                    zone_sequence.append((str(current_zone), str(base_from)))
-                zone_sequence.append((str(base_from), str(hub)))
-                zone_sequence.append((str(hub), str(base_from)))
-                if current_zone and str(current_zone) != str(base_from):
-                    zone_sequence.append((str(base_from), str(current_zone)))
-            if not zone_sequence:
-                QMessageBox.critical(self, "No Route", "Could not determine zone sequence for this task/map.")
-                return
+                out_path = plan_and_write_path(
+                    device_id=device_id,
+                    map_id=str(map_id),
+                    zone_sequence=zone_sequence,
+                    initial_direction=str(initial_direction).lower()
+                )
+                results.append(f"{device_id}: {out_path}")
 
-            try:
-                nav = get_zone_navigation_manager()
-                nav_info = nav.get_navigation_info(device_id)
-                initial_direction = (nav_info.get('locked_direction') or 'north')
-            except Exception:
-                initial_direction = 'north'
-
-            out_path = plan_and_write_path(
-                device_id=device_id,
-                map_id=str(map_id),
-                zone_sequence=zone_sequence,
-                initial_direction=str(initial_direction).lower()
-            )
-
-            QMessageBox.information(self, "Path Generated", f"Path commands written to:\n{out_path}")
+            QMessageBox.information(self, "Path Generated", "Path commands written for devices:\n" + "\n".join(results))
         except Exception as e:
             self.logger.error(f"Path planning failed: {e}")
             QMessageBox.critical(self, "Error", f"Failed to generate path: {e}")
