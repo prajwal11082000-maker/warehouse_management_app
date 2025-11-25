@@ -235,6 +235,13 @@ class DeviceTrackingWidget(QWidget):
         task_details_layout.addRow("Last Zone:", self.last_zone_info_label)
         task_details_layout.addRow("Current Zone:", self.current_zone_info_label)
 
+        # Multi-device live tracking container (blocks added on selection)
+        self.multi_tracking_container = QGroupBox("Devices Live Tracking")
+        self.multi_tracking_container.setStyleSheet(running_devices_group.styleSheet())
+        self.multi_tracking_layout = QVBoxLayout(self.multi_tracking_container)
+        self.multi_tracking_layout.setSpacing(8)
+        task_details_layout.addRow(self.multi_tracking_container)
+
         split_layout.addWidget(task_details_group)
 
         # Task Map Panel
@@ -404,34 +411,79 @@ class DeviceTrackingWidget(QWidget):
             self.logger.error(f"Error loading device data: {e}")
 
     def update_live_tracking(self):
-        """Update live tracking information for the selected device"""
+        """Update live tracking for active devices and map sprites."""
+        active_ids = getattr(self, 'active_device_ids', []) or []
+        # Update per-device blocks if present
+        if active_ids:
+            for did in active_ids:
+                try:
+                    data = self.device_data_handler.get_latest_device_data(did)
+                    blk = getattr(self, 'live_blocks', {}).get(did)
+                    if data and blk:
+                        blk['location'].setText(data.get('current_location', 'N/A'))
+                        blk['distance'].setText(data.get('distance', 'N/A'))
+                        blk['direction'].setText(data.get('direction', 'N/A'))
+                    elif blk:
+                        blk['location'].setText("No data available")
+                        blk['distance'].setText("N/A")
+                        blk['direction'].setText("N/A")
+                    # Update map sprite position for this device
+                    if hasattr(self, 'map_view') and self.map_view:
+                        try:
+                            self.map_view.map_canvas.update_robot_position_from_csv_multi(did)
+                        except Exception as e:
+                            self.logger.error(f"Error updating multi robot position: {e}")
+                except Exception as e:
+                    self.logger.error(f"Live tracking update failed for {did}: {e}")
+
+            # Also reflect the first device in the legacy single-device labels
+            first_id = active_ids[0]
+            data = self.device_data_handler.get_latest_device_data(first_id) or {}
+            self.current_location_label.setText(data.get('current_location', 'N/A'))
+            self.distance_label.setText(data.get('distance', 'N/A'))
+            direction = data.get('direction', 'N/A')
+            self.direction_label.setText(direction)
+            direction_color = {
+                "Forward": "#10B981",
+                "Backward": "#EF4444",
+                "Stationary": "#8B5CF6"
+            }.get(direction, "#cccccc")
+            self.direction_label.setStyleSheet(f"color: {direction_color};")
+            facing = data.get('facing_direction')
+            self.facing_label.setText(facing.title() if isinstance(facing, str) and facing else "N/A")
+            last_route = data.get('last_route')
+            current_route = data.get('current_route')
+            if not last_route:
+                lz = data.get('last_zone')
+                cz = data.get('current_zone')
+                last_route = f"{lz} -> {cz}" if lz and cz else None
+            if not current_route:
+                cz = data.get('current_zone')
+                tz = data.get('target_zone')
+                current_route = f"{cz} -> {tz}" if cz and tz else None
+            self.last_zone_info_label.setText(last_route or "N/A")
+            self.current_zone_info_label.setText(current_route or "N/A")
+            return
+
+        # Fallback: legacy single-device behavior
         device_id = self.device_id_label.text()
         if device_id and device_id != "N/A":
             device_data = self.device_data_handler.get_latest_device_data(device_id)
             if device_data:
                 self.current_location_label.setText(device_data['current_location'])
-                self.current_location_label.setStyleSheet("color: #10B981;")  # Green
-                
+                self.current_location_label.setStyleSheet("color: #10B981;")
                 self.distance_label.setText(device_data['distance'])
-                self.distance_label.setStyleSheet("color: #3B82F6;")  # Blue
-                
+                self.distance_label.setStyleSheet("color: #3B82F6;")
                 direction = device_data['direction']
                 self.direction_label.setText(direction)
-                # Color based on direction
                 direction_color = {
-                    "Forward": "#10B981",  # Green
-                    "Backward": "#EF4444",  # Red
-                    "Stationary": "#8B5CF6"  # Purple
-                }.get(direction, "#cccccc")  # Default gray
+                    "Forward": "#10B981",
+                    "Backward": "#EF4444",
+                    "Stationary": "#8B5CF6"
+                }.get(direction, "#cccccc")
                 self.direction_label.setStyleSheet(f"color: {direction_color};")
-
-                # Set facing orientation (robot's facing direction)
                 facing = device_data.get('facing_direction')
                 self.facing_label.setText(facing.title() if isinstance(facing, str) and facing else "N/A")
-                self.facing_label.setStyleSheet("color: #F59E0B;")  # Amber
-
-                # Populate last/current route (full from -> to)
-                # Prefer precomputed route strings; fallback to composing from zones if needed
                 last_route = device_data.get('last_route')
                 current_route = device_data.get('current_route')
                 if not last_route:
@@ -442,15 +494,10 @@ class DeviceTrackingWidget(QWidget):
                     cz = device_data.get('current_zone')
                     tz = device_data.get('target_zone')
                     current_route = f"{cz} -> {tz}" if cz and tz else None
-
-                last_text = last_route or "N/A"
-                current_text = current_route or "N/A"
-                self.last_zone_info_label.setText(last_text)
+                self.last_zone_info_label.setText(last_route or "N/A")
                 self.last_zone_info_label.setStyleSheet("color: #cccccc;")
-                self.current_zone_info_label.setText(current_text)
+                self.current_zone_info_label.setText(current_route or "N/A")
                 self.current_zone_info_label.setStyleSheet("color: #10B981;")
-                
-                # Update robot position in the map view
                 if hasattr(self, 'map_view') and self.map_view:
                     try:
                         self.map_view.update_robot_position(device_id)
@@ -472,47 +519,57 @@ class DeviceTrackingWidget(QWidget):
             self.current_zone_info_label.setText("N/A")
 
     def update_running_devices_combo(self, devices, tasks):
-        """Update running devices combo box"""
+        """Update selector to show running tasks with their assigned devices (multi-supported)."""
         try:
-            current_device = self.running_devices_combo.currentData()
+            current_data = self.running_devices_combo.currentData()
             
             self.running_devices_combo.clear()
-            self.running_devices_combo.addItem("Select Running Device", None)
-            
-            # Get all running tasks with devices
-            running_tasks = [t for t in tasks if (
-                t.get('status', '').lower() == 'running' and
-                t.get('assigned_device_id')
-            )]
-            
-            # Add devices that are running tasks
+            self.running_devices_combo.addItem("Select Running Task", None)
+
+            # Helper to resolve device_id string list from task
+            def resolve_device_ids_for_task(task):
+                multi_ids = [s.strip() for s in str(task.get('assigned_device_ids') or '').split(',') if s.strip()]
+                if not multi_ids and task.get('assigned_device_id'):
+                    multi_ids = [str(task.get('assigned_device_id'))]
+                result = []
+                for ref in multi_ids:
+                    drow = next((d for d in devices if str(d.get('id')) == str(ref) or str(d.get('device_id')) == str(ref)), None)
+                    if drow and drow.get('device_id'):
+                        result.append(str(drow.get('device_id')))
+                    else:
+                        result.append(str(ref))
+                return result
+
+            running_tasks = [t for t in tasks if str(t.get('status','')).lower() == 'running']
             for task in running_tasks:
-                device_id = task.get('assigned_device_id')
-                device = next((d for d in devices if str(d.get('id')) == str(device_id)), None)
-                
-                if device:
-                    display_text = (f"{device.get('device_name', '')} - "
-                                  f"Task: {task.get('task_name', '')}")
-                    device_data = {
-                        'device': device,
-                        'task': task
-                    }
-                    self.running_devices_combo.addItem(display_text, device_data)
-            
-            # Restore previous selection if still valid
-            if current_device:
+                dids = resolve_device_ids_for_task(task)
+                if not dids:
+                    continue
+                # Collect device objects for extra info
+                dev_objs = []
+                for did in dids:
+                    dev = next((d for d in devices if str(d.get('device_id')) == str(did)), None)
+                    if dev:
+                        dev_objs.append(dev)
+                names = [f"{d.get('device_name','')} ({d.get('device_id','')})" for d in dev_objs] or dids
+                display_text = f"Task: {task.get('task_name','')}  |  Devices: {', '.join(names)}"
+                item_data = {'task': task, 'devices': dev_objs, 'device_ids': dids}
+                self.running_devices_combo.addItem(display_text, item_data)
+
+            # Restore previous selection if still valid (by task id)
+            if current_data and isinstance(current_data, dict) and 'task' in current_data:
+                prev_task_id = current_data['task'].get('id')
                 for i in range(self.running_devices_combo.count()):
                     data = self.running_devices_combo.itemData(i)
-                    if (data and 
-                        data['device'].get('id') == current_device['device'].get('id')):
+                    if data and data.get('task', {}).get('id') == prev_task_id:
                         self.running_devices_combo.setCurrentIndex(i)
                         break
-                        
+            
         except Exception as e:
             self.logger.error(f"Error updating running devices: {e}")
 
     def on_running_device_selected(self, index):
-        """Handle running device selection"""
+        """Handle running selection: load task map and enable multi-device tracking for its devices."""
         try:
             data = self.running_devices_combo.currentData()
             if not data:
@@ -524,14 +581,25 @@ class DeviceTrackingWidget(QWidget):
                 self.task_details_text.setText("N/A")
                 # Clear the map
                 self.map_view.clear_map()
+                # Clear multi blocks
+                self._build_multi_live_tracking([])
+                self.active_device_ids = []
                 return
 
-            device = data['device']
-            task = data['task']
+            task = data.get('task', {})
+            device_ids = data.get('device_ids', [])
+            devices = data.get('devices', [])
 
-            # Update device details
-            self.device_name_label.setText(device.get('device_name', 'N/A'))
-            self.device_id_label.setText(device.get('device_id', 'N/A'))
+            # Update device details (summary)
+            if len(devices) > 1:
+                self.device_name_label.setText("Multiple")
+                self.device_id_label.setText(", ".join(device_ids))
+            elif len(devices) == 1:
+                self.device_name_label.setText(devices[0].get('device_name', 'N/A'))
+                self.device_id_label.setText(devices[0].get('device_id', 'N/A'))
+            else:
+                self.device_name_label.setText('N/A')
+                self.device_id_label.setText('N/A')
             
             # Update task details
             self.task_id_label.setText(task.get('task_id', 'N/A'))
@@ -624,22 +692,75 @@ class DeviceTrackingWidget(QWidget):
                     
                     # Fit the map to view
                     self.map_view.fit_to_view()
-                    
-                    # Update robot position based on CSV data
-                    device_id = device.get('device_id', '')
-                    if device_id:
+                    # Enable multi-robot sprites and initialize their positions
+                    if device_ids:
                         try:
-                            self.map_view.update_robot_position(device_id)
+                            self.map_view.map_canvas.set_active_devices(device_ids)
+                            for did in device_ids:
+                                self.map_view.map_canvas.update_robot_position_from_csv_multi(did)
                         except Exception as e:
-                            self.logger.error(f"Error setting initial robot position: {e}")
+                            self.logger.error(f"Error initializing multi robots: {e}")
             else:
                 # Clear the map if no map_id
                 self.map_view.clear_map()
-
+            # Build multi-device live tracking blocks and remember active ids
+            self._build_multi_live_tracking(device_ids)
+            self.active_device_ids = device_ids
         except Exception as e:
             self.logger.error(f"Error handling device selection: {e}")
             # Clear the map and show error in info label
             self.map_view.clear_map()
+
+    # -------- Helpers for multi-device live tracking --------
+    def _clear_layout(self, layout):
+        try:
+            if layout is None:
+                return
+            while layout.count():
+                item = layout.takeAt(0)
+                widget = item.widget()
+                if widget:
+                    widget.setParent(None)
+        except Exception:
+            pass
+
+    def _build_multi_live_tracking(self, device_ids):
+        """Create/refresh per-device live tracking blocks under the Live Tracking section."""
+        if not hasattr(self, 'multi_tracking_layout'):
+            return
+        self._clear_layout(self.multi_tracking_layout)
+        self.live_blocks = {}
+        if not device_ids:
+            lbl = QLabel("No device(s) for this task")
+            lbl.setStyleSheet("color: #cccccc;")
+            self.multi_tracking_layout.addWidget(lbl)
+            return
+        for did in device_ids:
+            try:
+                frame = QFrame()
+                frame.setStyleSheet("QFrame { background-color: #2f2f2f; border: 1px solid #555555; border-radius: 4px; }")
+                form = QFormLayout(frame)
+                form.setSpacing(6)
+                # Header label
+                header = QLabel(f"Device: {did}")
+                header.setStyleSheet("color: #ff6b35; font-weight: bold;")
+                form.addRow(header)
+                # Fields
+                loc = QLabel("Loading...")
+                loc.setStyleSheet("color: #10B981;")
+                dist = QLabel("Loading...")
+                dist.setStyleSheet("color: #3B82F6;")
+                direc = QLabel("Loading...")
+                direc.setStyleSheet("color: #8B5CF6;")
+                form.addRow("Current Location:", loc)
+                form.addRow("Distance:", dist)
+                form.addRow("Direction:", direc)
+                self.multi_tracking_layout.addWidget(frame)
+                if not hasattr(self, 'live_blocks'):
+                    self.live_blocks = {}
+                self.live_blocks[did] = {'location': loc, 'distance': dist, 'direction': direc}
+            except Exception:
+                continue
 
     def update_device_combo(self, devices):
         """Update device selection combo boxes"""
