@@ -304,7 +304,7 @@ class MapCanvas(QWidget):
             first_connection = zone_connections[start_zone][0]
             target_zone = first_connection['to']
             direction = first_connection['direction']
-            distance = min(first_connection['distance'] * 50, 1500)
+            distance = min(first_connection['distance'] * 250, 7500)
             
             # Get direction vector for first connection
             dx, dy = direction_vectors.get(direction, (1, 0))
@@ -343,7 +343,7 @@ class MapCanvas(QWidget):
                     continue
                 
                 direction = connection['direction']
-                distance = min(connection['distance'] * 50, 1500)  # Scale (250 px/m) and cap distance
+                distance = min(connection['distance'] * 250, 7500)  # Scale (250 px/m) and cap distance
                 
                 # Get direction vector
                 dx, dy = direction_vectors.get(direction, (1, 0))
