@@ -2,8 +2,93 @@ from PyQt5.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QTabWidget,
     QLabel, QFrame, QPushButton, QComboBox,
     QGroupBox, QFormLayout, QTableWidget,
-    QTableWidgetItem, QHeaderView, QSizePolicy
+    QTableWidgetItem, QHeaderView, QSizePolicy,
+    QScrollArea
 )
+
+class DeviceDetailCard(QFrame):
+    def __init__(self, device_data, parent=None):
+        super().__init__(parent)
+        self.device_id = device_data.get('device_id')
+        self.setup_ui(device_data)
+
+    def setup_ui(self, data):
+        self.setFrameStyle(QFrame.StyledPanel | QFrame.Raised)
+        self.setStyleSheet("""
+            QFrame {
+                background-color: #2f2f2f;
+                border: 1px solid #555555;
+                border-radius: 6px;
+            }
+            QLabel {
+                border: none;
+                background-color: transparent;
+                color: #e0e0e0;
+            }
+        """)
+        layout = QVBoxLayout(self)
+        layout.setSpacing(5)
+        
+        # Header
+        header_layout = QHBoxLayout()
+        name_label = QLabel(f"{data.get('device_name', 'Unknown')} ({self.device_id})")
+        name_label.setStyleSheet("font-weight: bold; color: #ff6b35; font-size: 14px;")
+        header_layout.addWidget(name_label)
+        header_layout.addStretch()
+        layout.addLayout(header_layout)
+        
+        # Grid for details
+        details_layout = QFormLayout()
+        details_layout.setSpacing(5)
+        
+        self.loc_label = QLabel("N/A")
+        self.dist_label = QLabel("N/A")
+        self.dir_label = QLabel("N/A")
+        self.face_label = QLabel("N/A")
+        self.last_zone_label = QLabel("N/A")
+        self.curr_zone_label = QLabel("N/A")
+        
+        # Style values
+        for lbl in [self.loc_label, self.dist_label, self.dir_label, self.face_label, self.last_zone_label, self.curr_zone_label]:
+            lbl.setStyleSheet("color: #10B981;") 
+            
+        details_layout.addRow("Location:", self.loc_label)
+        details_layout.addRow("Distance:", self.dist_label)
+        details_layout.addRow("Direction:", self.dir_label)
+        details_layout.addRow("Facing:", self.face_label)
+        details_layout.addRow("Last Zone:", self.last_zone_label)
+        details_layout.addRow("Current Zone:", self.curr_zone_label)
+        
+        layout.addLayout(details_layout)
+
+    def update_data(self, data):
+        if not data:
+            return
+        self.loc_label.setText(str(data.get('current_location', 'N/A')))
+        self.dist_label.setText(str(data.get('distance', 'N/A')))
+        
+        direction = data.get('direction', 'N/A')
+        self.dir_label.setText(direction)
+        # Color code direction
+        color = "#10B981" if direction == "Forward" else "#EF4444" if direction == "Backward" else "#8B5CF6" if direction == "Stationary" else "#e0e0e0"
+        self.dir_label.setStyleSheet(f"color: {color};")
+        
+        self.face_label.setText(str(data.get('facing_direction', 'N/A')).title())
+        
+        # Routes
+        last_route = data.get('last_route')
+        if not last_route:
+            lz = data.get('last_zone')
+            cz = data.get('current_zone')
+            last_route = f"{lz} -> {cz}" if lz and cz else "N/A"
+        self.last_zone_label.setText(last_route)
+        
+        curr_route = data.get('current_route')
+        if not curr_route:
+            cz = data.get('current_zone')
+            tz = data.get('target_zone')
+            curr_route = f"{cz} -> {tz}" if cz and tz else "N/A"
+        self.curr_zone_label.setText(curr_route)
 from PyQt5.QtCore import Qt, QTimer
 from PyQt5.QtGui import QFont
 from ui.maps.map_viewer import MapViewerWidget
@@ -156,24 +241,27 @@ class DeviceTrackingWidget(QWidget):
         split_container = QWidget()
         split_layout = QHBoxLayout(split_container)
         split_layout.setSpacing(20)
-        split_layout.setContentsMargins(0, 0, 0, 0)  # Remove margins for better control
+        split_layout.setContentsMargins(0, 0, 0, 0)
 
-        # Task Details Panel
-        task_details_group = QGroupBox("Task Details")
-        task_details_group.setStyleSheet(running_devices_group.styleSheet())
-        task_details_group.setMinimumWidth(300)  # Set minimum width for task details panel
-        task_details_layout = QFormLayout(task_details_group)
-        task_details_layout.setSpacing(15)
+        # Left Panel: Task Details + Scrollable Device List
+        left_panel = QWidget()
+        left_layout = QVBoxLayout(left_panel)
+        left_layout.setContentsMargins(0, 0, 0, 0)
+        left_layout.setSpacing(10)
+        left_panel.setMinimumWidth(350)
+        left_panel.setMaximumWidth(400)
 
-        # Create labels for task details
-        self.device_name_label = QLabel("N/A")
-        self.device_id_label = QLabel("N/A")
+        # 1. Task Info Group (Fixed)
+        task_info_group = QGroupBox("Task Info")
+        task_info_group.setStyleSheet(running_devices_group.styleSheet())
+        task_info_layout = QFormLayout(task_info_group)
+        task_info_layout.setSpacing(10)
+
         self.task_id_label = QLabel("N/A")
         self.task_type_label = QLabel("N/A")
         self.task_details_text = QLabel("N/A")
         self.task_details_text.setWordWrap(True)
-
-        # Style all labels
+        
         label_style = """
             QLabel {
                 color: #ffffff;
@@ -183,71 +271,59 @@ class DeviceTrackingWidget(QWidget):
                 border-radius: 4px;
             }
         """
-        for label in [self.device_name_label, self.device_id_label, 
-                     self.task_id_label, self.task_type_label, 
-                     self.task_details_text]:
+        for label in [self.task_id_label, self.task_type_label, self.task_details_text]:
             label.setStyleSheet(label_style)
-            label.setMinimumWidth(200)
 
-        # Add fields to form layout
-        task_details_layout.addRow("Device Name:", self.device_name_label)
-        task_details_layout.addRow("Device ID:", self.device_id_label)
-        task_details_layout.addRow("Task ID:", self.task_id_label)
-        task_details_layout.addRow("Task Type:", self.task_type_label)
-        task_details_layout.addRow("Task Details:", self.task_details_text)
+        task_info_layout.addRow("Task ID:", self.task_id_label)
+        task_info_layout.addRow("Task Type:", self.task_type_label)
+        task_info_layout.addRow("Details:", self.task_details_text)
 
-        # Add live tracking fields
-        self.current_location_label = QLabel("N/A")
-        self.distance_label = QLabel("N/A")
-        self.direction_label = QLabel("N/A")
-        # New: robot facing direction (orientation)
-        self.facing_label = QLabel("N/A")
-        # New: last/current zone info with directions (generic, from CSV + nav manager)
-        self.last_zone_info_label = QLabel("N/A")
-        self.current_zone_info_label = QLabel("N/A")
-        for label in [
-            self.current_location_label,
-            self.distance_label,
-            self.direction_label,
-            self.facing_label,
-            self.last_zone_info_label,
-            self.current_zone_info_label,
-        ]:
-            label.setStyleSheet(label_style)
-            label.setMinimumWidth(200)
+        left_layout.addWidget(task_info_group)
 
-        # Add divider
-        divider = QFrame()
-        divider.setFrameShape(QFrame.HLine)
-        divider.setStyleSheet("background-color: #666666;")
-        task_details_layout.addRow(divider)
+        # 2. Devices List (Scrollable)
+        devices_group = QGroupBox("Devices Live Tracking")
+        devices_group.setStyleSheet(running_devices_group.styleSheet())
+        devices_layout_wrapper = QVBoxLayout(devices_group)
+        
+        self.devices_scroll = QScrollArea()
+        self.devices_scroll.setWidgetResizable(True)
+        self.devices_scroll.setStyleSheet("""
+            QScrollArea { border: none; background-color: transparent; }
+            QWidget { background-color: transparent; }
+            QScrollBar:vertical {
+                border: none;
+                background: #2b2b2b;
+                width: 10px;
+                margin: 0px;
+            }
+            QScrollBar::handle:vertical {
+                background: #555555;
+                min-height: 20px;
+                border-radius: 5px;
+            }
+        """)
+        
+        self.devices_container = QWidget()
+        self.devices_layout = QVBoxLayout(self.devices_container)
+        self.devices_layout.setSpacing(10)
+        self.devices_layout.addStretch() # Push items up
+        
+        self.devices_scroll.setWidget(self.devices_container)
+        devices_layout_wrapper.addWidget(self.devices_scroll)
+        
+        left_layout.addWidget(devices_group)
+        
+        split_layout.addWidget(left_panel)
 
-        # Add live tracking section
-        tracking_title = QLabel("📍 Live Tracking")
-        tracking_title.setStyleSheet("color: #ff6b35; font-weight: bold; font-size: 14px;")
-        task_details_layout.addRow(tracking_title)
-        task_details_layout.addRow("Current Location:", self.current_location_label)
-        task_details_layout.addRow("Distance:", self.distance_label)
-        task_details_layout.addRow("Direction:", self.direction_label)
-        # New: Facing orientation
-        task_details_layout.addRow("Facing:", self.facing_label)
-        # Show full from -> to in these labels
-        task_details_layout.addRow("Last Zone:", self.last_zone_info_label)
-        task_details_layout.addRow("Current Zone:", self.current_zone_info_label)
-
-        split_layout.addWidget(task_details_group)
-
-        # Task Map Panel
+        # Right Panel: Task Map
         task_map_group = QGroupBox("Task Map")
         task_map_group.setStyleSheet(running_devices_group.styleSheet())
-        task_map_group.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)  # Allow map to expand
+        task_map_group.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         task_map_layout = QVBoxLayout(task_map_group)
-        task_map_layout.setContentsMargins(10, 10, 10, 10)  # Add some padding
+        task_map_layout.setContentsMargins(10, 10, 10, 10)
 
-        # Create map viewer widget
         self.map_view = MapViewerWidget(self.api_client, self.csv_handler)
         self.map_view.setMinimumSize(400, 300)
-        # Enable task mode for simplified view
         self.map_view.set_task_mode(True)
         task_map_layout.addWidget(self.map_view)
 
@@ -404,135 +480,103 @@ class DeviceTrackingWidget(QWidget):
             self.logger.error(f"Error loading device data: {e}")
 
     def update_live_tracking(self):
-        """Update live tracking information for the selected device"""
-        device_id = self.device_id_label.text()
-        if device_id and device_id != "N/A":
-            device_data = self.device_data_handler.get_latest_device_data(device_id)
-            if device_data:
-                self.current_location_label.setText(device_data['current_location'])
-                self.current_location_label.setStyleSheet("color: #10B981;")  # Green
-                
-                self.distance_label.setText(device_data['distance'])
-                self.distance_label.setStyleSheet("color: #3B82F6;")  # Blue
-                
-                direction = device_data['direction']
-                self.direction_label.setText(direction)
-                # Color based on direction
-                direction_color = {
-                    "Forward": "#10B981",  # Green
-                    "Backward": "#EF4444",  # Red
-                    "Stationary": "#8B5CF6"  # Purple
-                }.get(direction, "#cccccc")  # Default gray
-                self.direction_label.setStyleSheet(f"color: {direction_color};")
+        """Update live tracking for active devices and map sprites."""
+        active_ids = getattr(self, 'active_device_ids', []) or []
+        
+        # Update map sprites
+        if hasattr(self, 'map_view') and self.map_view and active_ids:
+            try:
+                for did in active_ids:
+                    self.map_view.map_canvas.update_robot_position_from_csv_multi(did)
+            except Exception as e:
+                self.logger.error(f"Error updating map positions: {e}")
 
-                # Set facing orientation (robot's facing direction)
-                facing = device_data.get('facing_direction')
-                self.facing_label.setText(facing.title() if isinstance(facing, str) and facing else "N/A")
-                self.facing_label.setStyleSheet("color: #F59E0B;")  # Amber
+        # Update device cards
+        if hasattr(self, 'device_cards'):
+            for did, card in self.device_cards.items():
+                try:
+                    data = self.device_data_handler.get_latest_device_data(did)
+                    card.update_data(data)
+                except Exception as e:
+                    self.logger.error(f"Error updating card for {did}: {e}")
 
-                # Populate last/current route (full from -> to)
-                # Prefer precomputed route strings; fallback to composing from zones if needed
-                last_route = device_data.get('last_route')
-                current_route = device_data.get('current_route')
-                if not last_route:
-                    lz = device_data.get('last_zone')
-                    cz = device_data.get('current_zone')
-                    last_route = f"{lz} -> {cz}" if lz and cz else None
-                if not current_route:
-                    cz = device_data.get('current_zone')
-                    tz = device_data.get('target_zone')
-                    current_route = f"{cz} -> {tz}" if cz and tz else None
-
-                last_text = last_route or "N/A"
-                current_text = current_route or "N/A"
-                self.last_zone_info_label.setText(last_text)
-                self.last_zone_info_label.setStyleSheet("color: #cccccc;")
-                self.current_zone_info_label.setText(current_text)
-                self.current_zone_info_label.setStyleSheet("color: #10B981;")
-                
-                # Update robot position in the map view
-                if hasattr(self, 'map_view') and self.map_view:
-                    try:
-                        self.map_view.update_robot_position(device_id)
-                    except Exception as e:
-                        self.logger.error(f"Error updating robot position: {e}")
-            else:
-                self.current_location_label.setText("No data available")
-                self.distance_label.setText("N/A")
-                self.direction_label.setText("N/A")
-                self.facing_label.setText("N/A")
-                self.last_zone_info_label.setText("N/A")
-                self.current_zone_info_label.setText("N/A")
-        else:
-            self.current_location_label.setText("No device selected")
-            self.distance_label.setText("N/A")
-            self.direction_label.setText("N/A")
-            self.facing_label.setText("N/A")
-            self.last_zone_info_label.setText("N/A")
-            self.current_zone_info_label.setText("N/A")
 
     def update_running_devices_combo(self, devices, tasks):
-        """Update running devices combo box"""
+        """Update selector to show running tasks with their assigned devices (multi-supported)."""
         try:
-            current_device = self.running_devices_combo.currentData()
+            current_data = self.running_devices_combo.currentData()
             
             self.running_devices_combo.clear()
-            self.running_devices_combo.addItem("Select Running Device", None)
-            
-            # Get all running tasks with devices
-            running_tasks = [t for t in tasks if (
-                t.get('status', '').lower() == 'running' and
-                t.get('assigned_device_id')
-            )]
-            
-            # Add devices that are running tasks
+            self.running_devices_combo.addItem("Select Running Task", None)
+
+            # Helper to resolve device_id string list from task
+            def resolve_device_ids_for_task(task):
+                multi_ids = [s.strip() for s in str(task.get('assigned_device_ids') or '').split(',') if s.strip()]
+                if not multi_ids and task.get('assigned_device_id'):
+                    multi_ids = [str(task.get('assigned_device_id'))]
+                result = []
+                for ref in multi_ids:
+                    drow = next((d for d in devices if str(d.get('id')) == str(ref) or str(d.get('device_id')) == str(ref)), None)
+                    if drow and drow.get('device_id'):
+                        result.append(str(drow.get('device_id')))
+                    else:
+                        result.append(str(ref))
+                return result
+
+            running_tasks = [t for t in tasks if str(t.get('status','')).lower() == 'running']
             for task in running_tasks:
-                device_id = task.get('assigned_device_id')
-                device = next((d for d in devices if str(d.get('id')) == str(device_id)), None)
-                
-                if device:
-                    display_text = (f"{device.get('device_name', '')} - "
-                                  f"Task: {task.get('task_name', '')}")
-                    device_data = {
-                        'device': device,
-                        'task': task
-                    }
-                    self.running_devices_combo.addItem(display_text, device_data)
-            
-            # Restore previous selection if still valid
-            if current_device:
+                dids = resolve_device_ids_for_task(task)
+                if not dids:
+                    continue
+                # Collect device objects for extra info
+                dev_objs = []
+                for did in dids:
+                    dev = next((d for d in devices if str(d.get('device_id')) == str(did)), None)
+                    if dev:
+                        dev_objs.append(dev)
+                names = [f"{d.get('device_name','')} ({d.get('device_id','')})" for d in dev_objs] or dids
+                display_text = f"Task: {task.get('task_name','')}  |  Devices: {', '.join(names)}"
+                item_data = {'task': task, 'devices': dev_objs, 'device_ids': dids}
+                self.running_devices_combo.addItem(display_text, item_data)
+
+            # Restore previous selection if still valid (by task id)
+            if current_data and isinstance(current_data, dict) and 'task' in current_data:
+                prev_task_id = current_data['task'].get('id')
                 for i in range(self.running_devices_combo.count()):
                     data = self.running_devices_combo.itemData(i)
-                    if (data and 
-                        data['device'].get('id') == current_device['device'].get('id')):
+                    if data and data.get('task', {}).get('id') == prev_task_id:
                         self.running_devices_combo.setCurrentIndex(i)
                         break
-                        
+            
         except Exception as e:
             self.logger.error(f"Error updating running devices: {e}")
 
     def on_running_device_selected(self, index):
-        """Handle running device selection"""
+        """Handle running selection: load task map and enable multi-device tracking for its devices."""
         try:
             data = self.running_devices_combo.currentData()
+            
+            # Clear previous cards
+            while self.devices_layout.count():
+                item = self.devices_layout.takeAt(0)
+                if item.widget():
+                    item.widget().deleteLater()
+            self.devices_layout.addStretch() # Ensure stretch is always at bottom
+            
+            self.device_cards = {}
+            self.active_device_ids = []
+
             if not data:
-                # Clear the panels
-                self.device_name_label.setText("N/A")
-                self.device_id_label.setText("N/A")
                 self.task_id_label.setText("N/A")
                 self.task_type_label.setText("N/A")
                 self.task_details_text.setText("N/A")
-                # Clear the map
                 self.map_view.clear_map()
                 return
 
-            device = data['device']
-            task = data['task']
+            task = data.get('task', {})
+            device_ids = data.get('device_ids', [])
+            devices = data.get('devices', [])
 
-            # Update device details
-            self.device_name_label.setText(device.get('device_name', 'N/A'))
-            self.device_id_label.setText(device.get('device_id', 'N/A'))
-            
             # Update task details
             self.task_id_label.setText(task.get('task_id', 'N/A'))
             self.task_type_label.setText(task.get('task_type', 'N/A').title())
@@ -544,7 +588,6 @@ class DeviceTrackingWidget(QWidget):
                 details_dict = json.loads(task_details)
                 formatted_details = []
                 
-                # Format specific fields we want to show
                 if details_dict.get('pickup_map_name'):
                     formatted_details.append(f"Pickup Map: {details_dict['pickup_map_name']}")
                 if details_dict.get('drop_zone_name'):
@@ -557,6 +600,21 @@ class DeviceTrackingWidget(QWidget):
             except Exception as e:
                 self.logger.error(f"Error parsing task details: {e}")
                 self.task_details_text.setText("Error loading task details")
+
+            # Create cards for each device
+            # Remove the stretch first
+            self.devices_layout.takeAt(self.devices_layout.count() - 1)
+            
+            for i, did in enumerate(device_ids):
+                # Find device data object
+                dev_obj = next((d for d in devices if str(d.get('device_id')) == str(did)), {'device_id': did, 'device_name': f'Device {i+1}'})
+                
+                card = DeviceDetailCard(dev_obj)
+                self.devices_layout.addWidget(card)
+                self.device_cards[did] = card
+                
+            self.devices_layout.addStretch()
+            self.active_device_ids = device_ids
 
             # Update map view based on task data
             map_id = task.get('map_id')
@@ -608,8 +666,6 @@ class DeviceTrackingWidget(QWidget):
                         "type": task.get("task_type", "").lower(),  # ensure lowercase
                         "status": task.get("status", "").lower()    # ensure lowercase
                     }
-
-
                     
                     self.map_view.set_map_data(
                         zones=map_zones,
@@ -624,22 +680,36 @@ class DeviceTrackingWidget(QWidget):
                     
                     # Fit the map to view
                     self.map_view.fit_to_view()
-                    
-                    # Update robot position based on CSV data
-                    device_id = device.get('device_id', '')
-                    if device_id:
+                    # Enable multi-robot sprites and initialize their positions
+                    if device_ids:
                         try:
-                            self.map_view.update_robot_position(device_id)
+                            self.map_view.map_canvas.set_active_devices(device_ids)
+                            for did in device_ids:
+                                self.map_view.map_canvas.update_robot_position_from_csv_multi(did)
                         except Exception as e:
-                            self.logger.error(f"Error setting initial robot position: {e}")
+                            self.logger.error(f"Error initializing multi robots: {e}")
             else:
                 # Clear the map if no map_id
                 self.map_view.clear_map()
-
         except Exception as e:
             self.logger.error(f"Error handling device selection: {e}")
-            # Clear the map and show error in info label
             self.map_view.clear_map()
+
+
+    # -------- Helpers for multi-device live tracking --------
+    def _clear_layout(self, layout):
+        try:
+            if layout is None:
+                return
+            while layout.count():
+                item = layout.takeAt(0)
+                widget = item.widget()
+                if widget:
+                    widget.setParent(None)
+        except Exception:
+            pass
+
+
 
     def update_device_combo(self, devices):
         """Update device selection combo boxes"""

@@ -32,9 +32,10 @@ class MapCanvas(QWidget):
         self.stops = []
         self.stop_groups = []
         
-        # Robot representation
-        self.robot = None
+        # Robot representation (single and multi)
+        self.robot = None  # legacy single-robot path
         self.robot_active = False
+        self.robots = {}   # device_id -> RobotSprite
         
         # Map background image
         self.map_image = None
@@ -147,31 +148,25 @@ class MapCanvas(QWidget):
         self.generate_zone_positions()
         self.generate_stop_positions()
 
-        # Handle robot setup
-        if task_status == 'running' and self.zones:
-
+        # Handle robot setup (legacy single robot); multi-robot can be set via set_active_devices
+        if task_status == 'running' and self.zones and not self.robots:
             starting_zone = self.get_task_start_zone(task_details)
-            
             if starting_zone:
                 try:
-                    # Create robot at zone center initially
                     start_x = float(starting_zone.get('from_x', 0))
                     start_y = float(starting_zone.get('from_y', 0))
                     zone_direction = starting_zone.get('direction', 'north')
-
-                    
                     self.robot = RobotSprite(QPointF(start_x, start_y), direction=zone_direction)
                     self.robot.starting_zone = starting_zone.get('from_zone', '')
                     self.robot.starting_coordinates = QPointF(start_x, start_y)
                     self.robot_active = True
-                    
                     self.fit_to_view()
                 except (ValueError, TypeError) as e:
                     print(f"DEBUG - Error creating robot: {e}")
             else:
                 print("DEBUG - No valid starting zone found")
         else:
-            print("DEBUG - Task not running or no zones available")
+            print("DEBUG - Task not running, no zones, or multi-robot active")
         
         self.update()
 
@@ -304,7 +299,7 @@ class MapCanvas(QWidget):
             first_connection = zone_connections[start_zone][0]
             target_zone = first_connection['to']
             direction = first_connection['direction']
-            distance = min(first_connection['distance'] * 50, 1500)
+            distance = min(first_connection['distance'] * 150, 7500)
             
             # Get direction vector for first connection
             dx, dy = direction_vectors.get(direction, (1, 0))
@@ -343,7 +338,7 @@ class MapCanvas(QWidget):
                     continue
                 
                 direction = connection['direction']
-                distance = min(connection['distance'] * 50, 1500)  # Scale (250 px/m) and cap distance
+                distance = min(connection['distance'] * 150, 7500)  # Scale (250 px/m) and cap distance
                 
                 # Get direction vector
                 dx, dy = direction_vectors.get(direction, (1, 0))
@@ -637,10 +632,6 @@ class MapCanvas(QWidget):
                 else:  # Stationary
                     current_direction = 'stationary'
                     is_turning = False
-            else:
-                # Movement REJECTED due to motor values
-                current_direction = 'stationary'
-                is_turning = False
             
             # Store device ID for zone direction lookup
             self._current_device_id = device_id
@@ -1004,6 +995,66 @@ class MapCanvas(QWidget):
                 
         except Exception as e:
             print(f"DEBUG - Error updating robot position: {e}")
+
+    # -------- Multi-robot helpers --------
+    def _determine_start_coordinates(self):
+        """Find a reasonable start position and direction from current zones."""
+        try:
+            first_name = self.get_first_zone_chronologically()
+            if not first_name:
+                return QPointF(0, 0), 'north'
+            zone = next((z for z in self.zones if str(z.get('from_zone','')) == str(first_name)), None)
+            if zone and 'from_x' in zone and 'from_y' in zone:
+                pos = QPointF(float(zone.get('from_x', 0)), float(zone.get('from_y', 0)))
+                return pos, str(zone.get('direction', 'north')).lower()
+        except Exception:
+            pass
+        return QPointF(0, 0), 'north'
+
+    def set_active_devices(self, device_ids: list):
+        """Initialize multiple robot sprites for the provided device IDs."""
+        if not isinstance(device_ids, list):
+            return
+        # Ensure zones are loaded
+        if not self.zones:
+            return
+        start_pos, start_dir = self._determine_start_coordinates()
+        # Create sprites if not already present
+        for did in device_ids:
+            key = str(did)
+            if key not in self.robots:
+                spr = RobotSprite(start_pos, direction=start_dir, label=key)
+                spr.starting_zone = None
+                spr.starting_coordinates = start_pos
+                self.robots[key] = spr
+        self.robot_active = True
+        self.update()
+
+    def update_robot_position_from_csv_multi(self, device_id: str):
+        """Update position for a specific device in multi-robot mode."""
+        try:
+            key = str(device_id)
+            if key not in self.robots:
+                # Initialize sprite lazily if not set
+                start_pos, start_dir = self._determine_start_coordinates()
+                self.robots[key] = RobotSprite(start_pos, direction=start_dir, label=key)
+                self.robots[key].starting_coordinates = start_pos
+            robot = self.robots[key]
+
+            # Temporarily bind single-robot reference for shared helpers
+            original_robot = self.robot
+            self.robot = robot
+            self._current_device_id = key
+            new_position = self.calculate_robot_position_from_csv_data(key, self.zones)
+            # Restore
+            self.robot = original_robot
+
+            if new_position:
+                robot.position = new_position
+                # Keep direction/lock sync via existing helper paths in calculate_*
+                self.update()
+        except Exception as e:
+            print(f"DEBUG - Error updating multi robot position for {device_id}: {e}")
     
     def get_current_zone_direction(self, device_id: str, zones: list) -> str:
         """
@@ -1285,8 +1336,12 @@ class MapCanvas(QWidget):
         # if self.show_stops:
         #     self.draw_stops(painter)
             
-        # Draw robot if active
-        if self.robot_active and self.robot:
+        # Draw robot(s) if active
+        if self.robots:
+            for spr in self.robots.values():
+                if spr:
+                    spr.draw(painter)
+        elif self.robot_active and self.robot:
             self.robot.draw(painter)
 
     def draw_grid(self, painter):

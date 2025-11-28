@@ -48,7 +48,7 @@ DEFAULT_BIN_DISTANCE = 2.0
 # CSV Headers
 CSV_HEADERS = {
     'devices': ['id', 'device_id', 'device_name', 'device_model', 'forward_speed', 'turning_speed', 'status', 'battery_level', 'current_location', 'wheel_diameter', 'distance_between_wheels', 'gear_ratio', 'length', 'width', 'height', 'lifting_height', 'max_forward_speed', 'max_turning_speed', 'distance', 'created_at', 'updated_at'],
-    'tasks': ['id', 'task_id', 'task_name', 'task_type', 'status', 'assigned_device_id', 'assigned_user_id', 'description', 'estimated_duration', 'actual_duration', 'created_at', 'started_at', 'completed_at', 'map_id', 'zone_ids', 'stop_ids', 'task_details'],
+    'tasks': ['id', 'task_id', 'task_name', 'task_type', 'status', 'assigned_device_id', 'assigned_device_ids', 'assigned_user_id', 'description', 'estimated_duration', 'actual_duration', 'created_at', 'started_at', 'completed_at', 'map_id', 'zone_ids', 'stop_ids', 'task_details'],
     'users': ['id', 'username', 'email', 'employee_id', 'profile_picture', 'is_active', 'created_at'],
     'maps': ['id', 'name', 'description', 'width', 'height', 'created_at'],
     'zones': ['id', 'map_id', 'from_zone', 'to_zone', 'magnitude', 'direction', 'zone_type', 'created_at'],

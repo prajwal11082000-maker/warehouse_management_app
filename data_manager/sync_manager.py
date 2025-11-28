@@ -168,8 +168,14 @@ class SyncManager:
                     'task_type': item.get('task_type'),
                     'status': item.get('status'),
                     'priority': item.get('priority'),
-                    'assigned_device_id': item.get('assigned_device', {}).get('id') if item.get(
-                        'assigned_device') else '',
+                    # Backward compatible single assignment
+                    'assigned_device_id': item.get('assigned_device', {}).get('id') if item.get('assigned_device') else '',
+                    # Multi-assignment support: accept either 'assigned_devices' (list of objects) or 'assigned_device_ids' (list)
+                    'assigned_device_ids': ','.join([
+                        str(d.get('id')) if isinstance(d, dict) else str(d)
+                    for d in (item.get('assigned_devices') or item.get('assigned_device_ids') or [])]) if (
+                        isinstance(item.get('assigned_devices') or item.get('assigned_device_ids'), (list, tuple))
+                    ) else '',
                     'assigned_user_id': item.get('assigned_user', {}).get('id') if item.get('assigned_user') else '',
                     'description': item.get('description', ''),
                     'from_location': item.get('from_location', ''),
@@ -262,6 +268,14 @@ class SyncManager:
             # Add optional fields if they exist
             if csv_data.get('assigned_device_id'):
                 api_data['assigned_device_id'] = int(csv_data['assigned_device_id'])
+            # Multi-assign: send as list of ints if present
+            ids_str = str(csv_data.get('assigned_device_ids') or '').strip()
+            if ids_str:
+                try:
+                    api_data['assigned_device_ids'] = [int(s) for s in ids_str.split(',') if str(s).strip()]
+                except Exception:
+                    # Fallback to raw strings
+                    api_data['assigned_device_ids'] = [s.strip() for s in ids_str.split(',') if s.strip()]
             if csv_data.get('assigned_user_id'):
                 api_data['assigned_user_id'] = int(csv_data['assigned_user_id'])
             if csv_data.get('estimated_duration'):

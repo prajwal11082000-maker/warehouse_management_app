@@ -1,8 +1,8 @@
 from PyQt5.QtCore import Qt, QPointF
-from PyQt5.QtGui import QPainter, QPen, QBrush, QColor, QPainterPath
+from PyQt5.QtGui import QPainter, QPen, QBrush, QColor, QPainterPath, QFont
 
 class RobotSprite:
-    def __init__(self, position: QPointF, size: float = 8.0, direction: str = 'north'):
+    def __init__(self, position: QPointF, size: float = 8.0, direction: str = 'north', label: str = ''):
         self.position = position
         self.starting_position = position  # Store initial position
         self.size = 30.0  # Increased size for better visibility
@@ -14,6 +14,8 @@ class RobotSprite:
         self.direction = direction.lower()  # Direction the robot is facing (north, south, east, west)
         # Track last valid cardinal direction to avoid accidental resets on zone transitions
         self.last_valid_direction = self.direction if self.direction in ['north', 'south', 'east', 'west'] else 'north'
+        # Optional label (e.g., device_id) to render near the sprite
+        self.label = label or ''
         
         # Direction locking state
         self.is_direction_locked = False  # Whether direction is locked due to turn detection
@@ -145,6 +147,15 @@ class RobotSprite:
             3,  # Small center dot
             3
         )
+
+        # Draw device label next to the sprite, if provided
+        if self.label:
+            painter.setPen(QPen(QColor('#FFFFFF'), 1))
+            painter.setFont(QFont('Arial', 10, QFont.Bold))
+            # Offset label slightly to the right and above the sprite for readability
+            label_x = int(self.position.x() + self.size / 2 + 6)
+            label_y = int(self.position.y() - self.size / 2)
+            painter.drawText(label_x, label_y, str(self.label))
         
         painter.restore()
         

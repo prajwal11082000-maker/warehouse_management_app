@@ -48,6 +48,8 @@ class TaskDetailsDialog(QDialog):
        self.device_location_label = None
        self.device_distance_label = None
        self.device_direction_label = None
+       self.live_tracking_blocks = {}
+       self.live_tracking_devices = []
        
        # Initialize default labels for task type details
        self.zone_label = "Zones"
@@ -71,22 +73,23 @@ class TaskDetailsDialog(QDialog):
 
     def update_live_tracking(self):
         """Update live tracking information"""
-        device_id = self.task_data.get('assigned_device_id')
-        if not device_id:
-            self.device_location_label.setText("No device assigned")
-            self.device_distance_label.setText("N/A")
-            self.device_direction_label.setText("N/A")
+        if not getattr(self, 'live_tracking_blocks', None):
             return
-
-        device_data = self.device_data_handler.get_latest_device_data(device_id)
-        if device_data:
-            self.device_location_label.setText(device_data['current_location'])
-            self.device_distance_label.setText(device_data['distance'])
-            self.device_direction_label.setText(device_data['direction'])
-        else:
-            self.device_location_label.setText("No data available")
-            self.device_distance_label.setText("N/A")
-            self.device_direction_label.setText("N/A")
+        for did, labels in self.live_tracking_blocks.items():
+            try:
+                device_data = self.device_data_handler.get_latest_device_data(did)
+                if device_data:
+                    labels['location'].setText(device_data.get('current_location', 'N/A'))
+                    labels['distance'].setText(device_data.get('distance', 'N/A'))
+                    labels['direction'].setText(device_data.get('direction', 'N/A'))
+                else:
+                    labels['location'].setText("No data available")
+                    labels['distance'].setText("N/A")
+                    labels['direction'].setText("N/A")
+            except Exception:
+                labels['location'].setText("No data available")
+                labels['distance'].setText("N/A")
+                labels['direction'].setText("N/A")
 
     def setup_ui(self):
        """Setup dialog UI"""
@@ -469,8 +472,8 @@ class TaskDetailsDialog(QDialog):
 
         grid_layout = QGridLayout()
 
-        # Assigned Device
-        grid_layout.addWidget(QLabel("Assigned Device:"), 0, 0)
+        # Assigned Device(s)
+        grid_layout.addWidget(QLabel("Assigned Device(s):"), 0, 0)
         self.assigned_device_label = QLabel()
         self.assigned_device_label.setStyleSheet("color: #cccccc;")
         self.assigned_device_label.setWordWrap(True)
@@ -495,27 +498,72 @@ class TaskDetailsDialog(QDialog):
     def create_live_tracking_section(self, parent_layout):
         """Create section showing live tracking information"""
         frame, layout = self.create_section_frame("📍 Live Tracking")
-        grid_layout = QGridLayout()
+        self.live_tracking_blocks = {}
+        self.live_tracking_devices = []
 
-        # Device current location
-        grid_layout.addWidget(QLabel("Device Current Location:"), 0, 0)
-        self.device_location_label = QLabel("Loading...")
-        self.device_location_label.setStyleSheet("color: #10B981;")  # Green color for location
-        grid_layout.addWidget(self.device_location_label, 0, 1)
+        # Determine assigned devices and resolve to device_id strings
+        devices_list = []
+        try:
+            ids_str = str(self.task_data.get('assigned_device_ids') or '').strip()
+            if ids_str:
+                pk_ids = [s for s in ids_str.split(',') if s.strip()]
+            else:
+                single = self.task_data.get('assigned_device_id')
+                pk_ids = [str(single)] if single else []
 
-        # Distance from current location
-        grid_layout.addWidget(QLabel("Distance from Current Location:"), 1, 0)
-        self.device_distance_label = QLabel("Loading...")
-        self.device_distance_label.setStyleSheet("color: #3B82F6;")  # Blue color for distance
-        grid_layout.addWidget(self.device_distance_label, 1, 1)
+            all_devices = self.csv_handler.read_csv('devices') if self.csv_handler else []
+            for pk in pk_ids:
+                did = pk
+                drow = next((d for d in all_devices if str(d.get('id')) == str(pk) or str(d.get('device_id')) == str(pk)), None)
+                if drow and drow.get('device_id'):
+                    did = drow.get('device_id')
+                devices_list.append(str(did))
+        except Exception:
+            devices_list = []
 
-        # Direction
-        grid_layout.addWidget(QLabel("Direction:"), 2, 0)
-        self.device_direction_label = QLabel("Loading...")
-        self.device_direction_label.setStyleSheet("color: #8B5CF6;")  # Purple color for direction
-        grid_layout.addWidget(self.device_direction_label, 2, 1)
+        self.live_tracking_devices = devices_list
 
-        layout.addLayout(grid_layout)
+        if not devices_list:
+            no_label = QLabel("No device(s) assigned")
+            no_label.setStyleSheet("color: #cccccc;")
+            layout.addWidget(no_label)
+            parent_layout.addWidget(frame)
+            return
+
+        for idx, did in enumerate(devices_list):
+            block = QFrame()
+            block.setStyleSheet("QFrame { background-color: #2f2f2f; border: 1px solid #555555; border-radius: 4px; padding: 10px; }")
+            blk_layout = QGridLayout(block)
+
+            blk_layout.addWidget(QLabel("Device ID:"), 0, 0)
+            id_val = QLabel(str(did))
+            id_val.setStyleSheet("color: #cccccc; font-weight: bold;")
+            blk_layout.addWidget(id_val, 0, 1)
+
+            blk_layout.addWidget(QLabel("Device Current Location:"), 1, 0)
+            loc_val = QLabel("Loading...")
+            loc_val.setStyleSheet("color: #10B981;")
+            blk_layout.addWidget(loc_val, 1, 1)
+
+            blk_layout.addWidget(QLabel("Distance from Current Location:"), 2, 0)
+            dist_val = QLabel("Loading...")
+            dist_val.setStyleSheet("color: #3B82F6;")
+            blk_layout.addWidget(dist_val, 2, 1)
+
+            blk_layout.addWidget(QLabel("Direction:"), 3, 0)
+            dir_val = QLabel("Loading...")
+            dir_val.setStyleSheet("color: #8B5CF6;")
+            blk_layout.addWidget(dir_val, 3, 1)
+
+            layout.addWidget(block)
+
+            self.live_tracking_blocks[did] = {
+                'id_label': id_val,
+                'location': loc_val,
+                'distance': dist_val,
+                'direction': dir_val
+            }
+
         parent_layout.addWidget(frame)
 
         # Start periodic updates
@@ -699,20 +747,36 @@ class TaskDetailsDialog(QDialog):
 
        # Check if assignment labels exist
        if all([self.assigned_device_label, self.assigned_user_label, self.created_by_label]):
-           # Assignment
-           device_id = self.task_data.get('assigned_device_id', 'Unassigned')
-           if device_id and device_id != 'Unassigned':
-               try:
-                   devices = self.csv_handler.read_csv('devices')
-                   device = next((d for d in devices if str(d.get('device_id')) == str(device_id)), None)
-                   if device:
-                       device_text = f"{device.get('device_name', '')} ({device.get('device_id', '')})"
+           # Assignment - devices (support multiple)
+           devices = []
+           try:
+               devices = self.csv_handler.read_csv('devices')
+           except Exception:
+               devices = []
+           device_text = 'Unassigned'
+           multi_ids = [s.strip() for s in str(self.task_data.get('assigned_device_ids') or '').split(',') if s.strip()]
+           if multi_ids:
+               names = []
+               for did in multi_ids:
+                   d = next((x for x in devices if str(x.get('id')) == str(did) or str(x.get('device_id')) == str(did)), None)
+                   if d:
+                       names.append(f"{d.get('device_name','')} ({d.get('device_id','')})")
                    else:
-                       device_text = f"Device ID: {device_id}"
-               except Exception:
-                   device_text = str(device_id)
+                       names.append(str(did))
+               device_text = ", ".join(names)
            else:
-               device_text = 'Unassigned'
+               device_id = self.task_data.get('assigned_device_id', 'Unassigned')
+               if device_id and device_id != 'Unassigned':
+                   try:
+                       d = next((x for x in devices if str(x.get('id')) == str(device_id) or str(x.get('device_id')) == str(device_id)), None)
+                       if d:
+                           device_text = f"{d.get('device_name', '')} ({d.get('device_id', '')})"
+                       else:
+                           device_text = f"Device: {device_id}"
+                   except Exception:
+                       device_text = str(device_id)
+               else:
+                   device_text = 'Unassigned'
            self.assigned_device_label.setText(device_text)
 
            user_id = self.task_data.get('assigned_user_id', 'Unassigned')
